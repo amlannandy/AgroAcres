@@ -1,0 +1,50 @@
+name: AgroAcres
+description: A new Flutter project.
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.5.2 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cloud_firestore: ^0.13.4+2  
+  cupertino_icons: ^0.1.2
+  firebase_auth: ^0.15.5+3
+  firebase_storage: ^3.1.5
+  fluttertoast: ^4.0.1
+  font_awesome_flutter: ^8.7.0
+  geolocator: ^5.3.1
+  google_nav_bar: ^2.2.0
+  http: ^0.12.1
+  image_picker: ^0.6.5+2
+  line_icons: ^0.2.0
+  provider: ^4.0.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_launcher_icons: "^0.7.3"
+
+flutter_icons:
+  android: "launcher_icon" 
+  ios: true
+  image_path: "assets/images/icon.png"
+
+flutter:
+  uses-material-design: true
+
+  assets:
+   - assets/images/icon.png
+
+  fonts:
+    - family: Varela
+      fonts:
+        - asset: assets/fonts/Varela-Regular.ttf
+    - family: Lato
+      fonts:
+        - asset: assets/fonts/Lato-Regular.ttf
+        - asset: assets/fonts/Lato-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Lato-Italic.ttf
+          style: italic

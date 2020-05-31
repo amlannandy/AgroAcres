@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "311080697073",
+    "firebase_url": "https://agroacres-bbsr.firebaseio.com",
+    "project_id": "agroacres-bbsr",
+    "storage_bucket": "agroacres-bbsr.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:311080697073:android:1d1e23a139e049d2127d50",
+        "android_client_info": {
+          "package_name": "com.complexity.agro_acres"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "311080697073-pej2tsr3l2rrganie1v3m2u661d2qgco.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.complexity.agro_acres",
+            "certificate_hash": "540bbe4b85d04fecdef1578d1402194812efefa4"
+          }
+        },
+        {
+          "client_id": "311080697073-p7tj7ohqug3mf07v82k65rn7c39hu9ak.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXWsckhTxpOpLwkJKCxy9qxinhOhsnBB0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "311080697073-p7tj7ohqug3mf07v82k65rn7c39hu9ak.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
