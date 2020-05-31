@@ -1,4 +1,11 @@
-# agro_acres
+## AgroAcres
+
+AgroAcres is an app-based platform which promotes Smart Agriculture among Indian Farmers
+
+## Tech Stack
+
+1. Flutter - The skelton of the project
+2. Natural Language Processing - The Chatbot in this project was creating entirely using IBM's Watson Assistant.
 
 A new Flutter project.
 
