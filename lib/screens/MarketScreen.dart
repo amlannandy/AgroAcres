@@ -1,6 +1,8 @@
-import 'package:AgroAcres/models/Crop.dart';
-import 'package:AgroAcres/widgets/CropCard.dart';
 import 'package:flutter/material.dart';
+
+import '../models/Crop.dart';
+import '../widgets/CropCard.dart';
+import '../widgets/FiltersBottomSheet.dart';
 
 class MarketScreen extends StatelessWidget {
 
@@ -11,21 +13,29 @@ class MarketScreen extends StatelessWidget {
       id: 'df',
       name: 'Potato',
       imageUrl: 'http://www.isaaa.org/kc/cropbiotechupdate/files/images/1232019105233PM.jpg',
-      price: 12.34
+      price: 14,
     ),
     Crop(
       id: 'df',
-      name: 'Potato',
-      imageUrl: 'http://www.isaaa.org/kc/cropbiotechupdate/files/images/1232019105233PM.jpg',
-      price: 12.34
+      name: 'Brinjal',
+      imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/76/Solanum_melongena_24_08_2012_%281%29.JPG',
+      price: 65,
     ),
     Crop(
       id: 'df',
       name: 'Cauliflower',
       imageUrl: 'https://25wxih3lxatn2okzkn1cr69o-wpengine.netdna-ssl.com/wp-content/uploads/bigstock-204217831-1024x683.jpg',
-      price: 12.34
+      price: 80,
     ),
   ];
+
+  void openFiltersSheet(BuildContext context) {
+    showModalBottomSheet(
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (ctx) => FiltersBottomSheet(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +53,17 @@ class MarketScreen extends StatelessWidget {
       child: Column(
         children: <Widget>[
           SizedBox(height: MediaQuery.of(context).size.height * 0.06),
-          searchField(),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                searchField(context),
+                SizedBox(width: 6),
+                filterButton(context),
+              ],
+            ),
+          ),
           Container(
             height: MediaQuery.of(context).size.height * 0.78,
             padding: const EdgeInsets.only(
@@ -60,8 +80,9 @@ class MarketScreen extends StatelessWidget {
     );
   }
 
-  Widget searchField() {
+  Widget searchField(BuildContext context) {
     return Container(
+      width: MediaQuery.of(context).size.width * 0.8,
       decoration: BoxDecoration(
         border: Border.all(
           color: Colors.green[800],
@@ -70,7 +91,7 @@ class MarketScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(20.0),
         color: Colors.white
       ),
-      margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 20.0),
+      margin: const EdgeInsets.symmetric(vertical: 5.0),
       child: Row(
         children: <Widget>[
           Padding(
@@ -100,6 +121,23 @@ class MarketScreen extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget filterButton(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadiusDirectional.circular(35),
+        color: Colors.white,
+      ),
+      child: IconButton(
+        color: Colors.white,
+        icon: Icon(
+          Icons.menu,
+          color: Colors.green[800],
+        ),
+        onPressed: () => openFiltersSheet(context),
       ),
     );
   }

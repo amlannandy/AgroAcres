@@ -4,10 +4,17 @@ import 'package:line_icons/line_icons.dart';
 import '../widgets/CustomDarkButton.dart';
 import '../widgets/CustomTextField.dart';
 import '../services/UserInfoProvider.dart';
+import '../widgets/LightIconButton.dart';
 
-class UserInfoScreen extends StatelessWidget {
+class UserInfoScreen extends StatefulWidget {
 
   static const routeName = '/userinfo';
+
+  @override
+  _UserInfoScreenState createState() => _UserInfoScreenState();
+}
+
+class _UserInfoScreenState extends State<UserInfoScreen> {
 
   final _nameController = TextEditingController();
   final _ageController = TextEditingController();
@@ -18,7 +25,6 @@ class UserInfoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        alignment: Alignment.center,
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -32,9 +38,9 @@ class UserInfoScreen extends StatelessWidget {
         ),
         child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              pictureContainer(),
+              pictureContainer(context),
+              SizedBox(height: 40),
               CustomTextField(
                 icon: LineIcons.user,
                 labelText: "Your Name",
@@ -57,7 +63,7 @@ class UserInfoScreen extends StatelessWidget {
                 controller: _aadharController,
                 numeric: true,
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 30),
               customDarkButton(
                 text: "Submit",
                 icon: LineIcons.check_circle,
@@ -76,10 +82,60 @@ class UserInfoScreen extends StatelessWidget {
     );
   }
 
-  Widget pictureContainer() {
-    return Padding(
-      padding: const EdgeInsets.all(10),
+  showUploadDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      child: AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(25),
+        ),
+        titlePadding: const EdgeInsets.all(20),
+        title: Text(
+          "Upload Picture",
+          style: TextStyle(
+            fontFamily: 'Lato', 
+            fontSize: 22,
+            color: Colors.green[800],
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: LightIconButton(
+              icon: Icons.camera_alt,
+              text: "Camera",
+              function: () {
+                UserInfoProvider.takePicture(context, () => {setState(() {})});
+                Navigator.of(context).pop();
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: LightIconButton(
+              icon: Icons.filter,
+              text: "Gallery",
+              function: () {
+                UserInfoProvider.uploadPicture(context, () => {setState(() {})});
+                Navigator.of(context).pop();
+              },
+            ),
+          ),
+        ],
+      )
+    );
+  }
+
+  Widget pictureContainer(BuildContext context) {
+    return Container(
+      height: 280,
+      width: double.infinity,
+      padding: const EdgeInsets.only(
+        top: 70,
+      ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           CircleAvatar(
             radius: 60,
@@ -88,10 +144,13 @@ class UserInfoScreen extends StatelessWidget {
               LineIcons.user, 
               size: 70,
               color: Colors.green[800],
-            ) : Image.network(UserInfoProvider.currentImageUrl),
+            ) : Container(),
+            backgroundImage: UserInfoProvider.currentImageUrl.isEmpty ? null : NetworkImage(UserInfoProvider.currentImageUrl),
           ),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              showUploadDialog(context);
+            },
             child: Container(
               margin: const EdgeInsets.only(
                 top: 15,
@@ -106,9 +165,10 @@ class UserInfoScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Colors.white,
-                  width: 1.5,
+                  width: 0.3,
                 ),
-                borderRadius: BorderRadius.circular(25)
+                borderRadius: BorderRadius.circular(25),
+                color: Colors.green[800],
               ),
               child: Text(
                 "Add Picture",
@@ -125,5 +185,4 @@ class UserInfoScreen extends StatelessWidget {
       ),
     );
   }
-
 }

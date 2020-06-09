@@ -1,11 +1,16 @@
+import 'dart:io';
+import 'package:path/path.dart' as Path;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
 
 class UserInfoProvider {
 
+  static File currentImage;
   static String currentImageUrl = "";
 
   static void uploadUserInfo({BuildContext context, String name, String age, String location, String aadharNumber, Position userPosition}) async {
@@ -44,6 +49,40 @@ class UserInfoProvider {
       'aadharNumber' : aadharNumber,
     });
     Navigator.of(context).pushReplacementNamed('/init');
+  }
+
+  static Future takePicture(BuildContext context, Function notifyChanges) async {
+    final imageFile = await ImagePicker.pickImage(
+      source: ImageSource.camera,
+      maxWidth: 600,
+    );
+    if (imageFile == null)
+      return;
+    currentImage = imageFile;
+    StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('doctorProfilePictures/${Path.basename(currentImage.path)}}');
+    StorageUploadTask uploadTask = firebaseStorageRef.putFile(currentImage);
+    await uploadTask.onComplete;
+    firebaseStorageRef.getDownloadURL().then((fileUrl) {
+      currentImageUrl = fileUrl;
+      notifyChanges();
+    });
+  }
+
+  static Future uploadPicture(BuildContext context, Function notifyChanges) async {
+    final imageFile = await ImagePicker.pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 600,
+    );
+    if (imageFile == null)
+      return;
+    currentImage = imageFile;
+    StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('doctorProfilePictures/${Path.basename(currentImage.path)}}');
+    StorageUploadTask uploadTask = firebaseStorageRef.putFile(currentImage);
+    await uploadTask.onComplete;
+    firebaseStorageRef.getDownloadURL().then((fileUrl) {
+      currentImageUrl = fileUrl;
+      notifyChanges();
+    });
   }
 
   static Future<void> logOut(context) async {

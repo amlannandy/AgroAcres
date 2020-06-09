@@ -64,7 +64,7 @@ class UserInfo extends StatelessWidget {
                 alignment: Alignment.topLeft,
                 padding: EdgeInsets.all(2.5),
                 child: Text(
-                  user.aadharNo,
+                  user.city,
                   style: TextStyle(
                     fontSize: 14,
                     fontFamily: 'Varela',
