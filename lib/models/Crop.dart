@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Crop {
 
   final String id;
   final String name;
   final String imageUrl;
-  final double price;
+  final int price;
 
   Crop({
     @required this.id,
@@ -21,6 +22,19 @@ class Crop {
       imageUrl: crop['imageUrl'],
       price: crop['price'],
     );
+  }
+
+  factory Crop.fromFirestore(DocumentSnapshot snapshot) {
+    Map data = snapshot.data;
+    if (data == null)
+      return null;
+    Crop user = Crop(
+      id: snapshot.documentID,
+      name: data['name'],
+      imageUrl: data['imageUrl'],
+      price: data['price'],
+    );
+    return user;
   }
 
 }

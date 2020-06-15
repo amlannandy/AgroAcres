@@ -16,8 +16,8 @@ class NavBarController extends StatefulWidget {
 
 class _NavBarControllerState extends State<NavBarController> {
   
-  int _selectedIndex = 0;
-  final _pageController = PageController(initialPage: 0);
+  int _selectedIndex = 1;
+  final _pageController = PageController(initialPage: 1);
 
   Map<String, Widget> _pages = {
     "Home" : HomeScreen(),

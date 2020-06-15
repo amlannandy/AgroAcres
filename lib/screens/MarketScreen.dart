@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../models/Crop.dart';
@@ -7,27 +8,6 @@ import '../widgets/FiltersBottomSheet.dart';
 class MarketScreen extends StatelessWidget {
 
   final _searchController = TextEditingController();
-
-  final cropData = [
-    Crop(
-      id: 'df',
-      name: 'Potato',
-      imageUrl: 'http://www.isaaa.org/kc/cropbiotechupdate/files/images/1232019105233PM.jpg',
-      price: 14,
-    ),
-    Crop(
-      id: 'df',
-      name: 'Brinjal',
-      imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/76/Solanum_melongena_24_08_2012_%281%29.JPG',
-      price: 65,
-    ),
-    Crop(
-      id: 'df',
-      name: 'Cauliflower',
-      imageUrl: 'https://25wxih3lxatn2okzkn1cr69o-wpengine.netdna-ssl.com/wp-content/uploads/bigstock-204217831-1024x683.jpg',
-      price: 80,
-    ),
-  ];
 
   void openFiltersSheet(BuildContext context) {
     showModalBottomSheet(
@@ -69,10 +49,26 @@ class MarketScreen extends StatelessWidget {
             padding: const EdgeInsets.only(
               top: 10,
             ),
-            child: ListView.builder(
-              padding: const EdgeInsets.all(0),
-              itemBuilder: (ctx, index) => CropCard(cropData[index]),
-              itemCount: cropData.length,
+            child: StreamBuilder<QuerySnapshot>(
+              stream: Firestore.instance.collection('markets').snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting || !snapshot.hasData) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation(Colors.green[800]),
+                    ),
+                  );
+                }
+                final cropDocs = snapshot.data.documents;
+                var cropData = [];
+                print(cropDocs);
+                cropDocs.forEach((crop) => cropData.add(Crop.fromFirestore(crop)));
+                return ListView.builder(
+                  padding: const EdgeInsets.all(0),
+                  itemBuilder: (ctx, index) => CropCard(cropData[index]),
+                  itemCount: cropData.length,
+                );
+              }
             ),
           ),
         ],
