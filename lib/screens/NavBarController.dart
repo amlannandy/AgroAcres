@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 
-import '../screens/MenuScreen.dart';
-import '../screens/HomeScreen.dart';
-import '../screens/MarketScreen.dart';
+import './MenuScreen.dart';
+import './HomeScreen.dart';
+import './MandiScreen.dart';
 
 class NavBarController extends StatefulWidget {
 
@@ -16,15 +16,14 @@ class NavBarController extends StatefulWidget {
 
 class _NavBarControllerState extends State<NavBarController> {
   
-  int _selectedIndex = 1;
-  final _pageController = PageController(initialPage: 1);
+  int _selectedIndex = 0;
+  final _pageController = PageController(initialPage: 0);
 
   Map<String, Widget> _pages = {
-    "Home" : HomeScreen(),
-    "Market" : MarketScreen(),
+    "Market" : HomeScreen(),
+    "Mandi" : MandiScreen(),
     "Menu" : MenuScreen(),
   };
-
   @override
   void dispose() {
     _pageController.dispose();
@@ -61,8 +60,8 @@ class _NavBarControllerState extends State<NavBarController> {
             tabBackgroundColor: Theme.of(context).primaryColor,
             tabs: [
               GButton(
-                icon: LineIcons.home,
-                text: 'Home',
+                icon: LineIcons.balance_scale,
+                text: 'Market',
                 iconColor: Theme.of(context).primaryColor,
                 onPressed: (index) {
                   print(index);
@@ -70,8 +69,8 @@ class _NavBarControllerState extends State<NavBarController> {
                 },
               ),
               GButton(
-                icon: LineIcons.balance_scale,
-                text: 'Market',
+                icon: LineIcons.map,
+                text: 'Mandi',
                 iconColor: Theme.of(context).primaryColor,
                 onPressed: (index) {
                   setState(() => _selectedIndex = index);
@@ -82,7 +81,6 @@ class _NavBarControllerState extends State<NavBarController> {
                 text: 'Menu',
                 iconColor: Theme.of(context).primaryColor,
                 onPressed: (index) {
-                  print("Hello");
                   setState(() => _selectedIndex = index);
                 },
               ),

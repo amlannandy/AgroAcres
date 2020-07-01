@@ -1,11 +1,18 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../models/Crop.dart';
 import '../widgets/CropCard.dart';
+import '../services/MandiProvider.dart';
+import '../widgets/LoadingSpinner.dart';
 import '../widgets/FiltersBottomSheet.dart';
 
-class MarketScreen extends StatelessWidget {
+class MandiScreen extends StatefulWidget {
+
+  @override
+  _MandiScreenState createState() => _MandiScreenState();
+}
+
+class _MandiScreenState extends State<MandiScreen> {
 
   final _searchController = TextEditingController();
 
@@ -49,24 +56,17 @@ class MarketScreen extends StatelessWidget {
             padding: const EdgeInsets.only(
               top: 10,
             ),
-            child: StreamBuilder<QuerySnapshot>(
-              stream: Firestore.instance.collection('markets').snapshots(),
+            child: FutureBuilder<List<Crop>>(
+              future: MandiProvider.fetchCropsData(),
               builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting || !snapshot.hasData) {
-                  return Center(
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation(Colors.green[800]),
-                    ),
-                  );
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return loadingSpinner();
                 }
-                final cropDocs = snapshot.data.documents;
-                var cropData = [];
-                print(cropDocs);
-                cropDocs.forEach((crop) => cropData.add(Crop.fromFirestore(crop)));
+                final crops = snapshot.data;
                 return ListView.builder(
                   padding: const EdgeInsets.all(0),
-                  itemBuilder: (ctx, index) => CropCard(cropData[index]),
-                  itemCount: cropData.length,
+                  itemBuilder: (ctx, index) => CropCard(crops[index]),
+                  itemCount: crops.length,
                 );
               }
             ),

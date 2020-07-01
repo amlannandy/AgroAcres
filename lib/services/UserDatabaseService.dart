@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'dart:async';
 
 import '../models/User.dart';
+import '../models/Product.dart';
 
 class UserDatabaseService {
   
@@ -17,6 +17,18 @@ class UserDatabaseService {
     DocumentSnapshot snapshot = await _db.collection('users').document(id).get();
     print(snapshot.data);
     return User.fromFirestore(snapshot);
+  }
+
+  Stream<Product> streamProduct(String id) {
+    return _db.collection('products').document(id).snapshots().map(
+      (snapshot) => Product.fromFirestore(snapshot)
+    );
+  }
+
+  Future<Product> getProduct(String id) async {
+    DocumentSnapshot snapshot = await _db.collection('products').document(id).get();
+    print(snapshot.data);
+    return Product.fromFirestore(snapshot);
   }
   
 }

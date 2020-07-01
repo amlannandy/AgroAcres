@@ -1,40 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Crop {
 
-  final String id;
   final String name;
-  final String imageUrl;
-  final int price;
+  final String variety;
+  final String minPrice;
+  final String maxPrice;
+  final String modalPrice;
+  final String state;
+  final String district;
+  final String arrivalDate;
 
   Crop({
-    @required this.id,
     @required this.name,
-    @required this.imageUrl,
-    @required this.price,
+    @required this.variety,
+    @required this.minPrice,
+    @required this.maxPrice,
+    @required this.modalPrice,
+    @required this.state,
+    @required this.district,
+    @required this.arrivalDate,
   });
 
   factory Crop.fromJson(Map crop) {
+    print(crop);
     return Crop(
-      id: crop['id'],
-      name: crop['name'],
-      imageUrl: crop['imageUrl'],
-      price: crop['price'],
+      name: crop['commodity'],
+      variety: crop['variety'],
+      minPrice: crop['min_price'],
+      maxPrice: crop['max_price'],
+      modalPrice: crop['modal_price'],
+      state: crop['state'],
+      district: crop['district'],
+      arrivalDate: crop['arrivalDate'] ?? '10/10/10',
     );
-  }
-
-  factory Crop.fromFirestore(DocumentSnapshot snapshot) {
-    Map data = snapshot.data;
-    if (data == null)
-      return null;
-    Crop user = Crop(
-      id: snapshot.documentID,
-      name: data['name'],
-      imageUrl: data['imageUrl'],
-      price: data['price'],
-    );
-    return user;
   }
 
 }

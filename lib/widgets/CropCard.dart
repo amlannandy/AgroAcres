@@ -24,18 +24,6 @@ class CropCard extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(15),
-              topLeft: Radius.circular(15),
-            ),
-            child: Image.network(
-              crop.imageUrl,
-              height: 100,
-              width: 100,
-              fit: BoxFit.cover,
-            ),
-          ),
           Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 12,
@@ -46,7 +34,7 @@ class CropCard extends StatelessWidget {
               children: <Widget>[
                 pocketContainer(Icons.restaurant, crop.name),
                 SizedBox(height: 12.5),
-                pocketContainer(FontAwesomeIcons.rupeeSign, crop.price.toStringAsFixed(0) + ' / kg'),
+                pocketContainer(FontAwesomeIcons.rupeeSign, crop.maxPrice + ' / kg'),
               ],
             ),
           ),

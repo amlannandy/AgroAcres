@@ -32,9 +32,24 @@ class MenuScreen extends StatelessWidget {
         children: <Widget>[
           userInfo(user),
           menuItem(
+            onPress: () => Navigator.of(context).pushNamed('/myproducts'),
+            title: 'My Products',
+            icon: Icons.storage,
+          ),
+          menuItem(
+            onPress: () => Navigator.of(context).pushNamed('/chatbot'),
+            title: 'Your Calender',
+            icon: Icons.calendar_today,
+          ),
+          menuItem(
             onPress: () => Navigator.of(context).pushNamed('/chatbot'),
             title: 'Chatbot',
             icon: Icons.chat_bubble_outline,
+          ),
+          menuItem(
+            onPress: () => Navigator.of(context).pushNamed('/weather'),
+            title: 'Weather Forecast',
+            icon: Icons.cloud,
           ),
           menuItem(
             onPress: () => UserInfoProvider.logOut(context),

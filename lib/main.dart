@@ -4,9 +4,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import './screens/InitScreen.dart';
 import './screens/LoginScreen.dart';
+import './screens/WeatherScreen.dart';
 import './screens/ChatbotScreen.dart';
 import './screens/UserInfoScreen.dart';
 import './screens/NavBarController.dart';
+import './screens/MyProductsScreen.dart';
+import './services/WeatherProvider.dart';
+import './screens/AddProductScreen.dart';
 
 void main() => runApp(MyApp());
 
@@ -18,6 +22,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         StreamProvider<FirebaseUser>.value(value: FirebaseAuth.instance.onAuthStateChanged),
+        ChangeNotifierProvider.value(value: WeatherProvider()),
       ],
       child: MaterialApp(
         theme: ThemeData(
@@ -43,6 +48,9 @@ class MyApp extends StatelessWidget {
           '/userinfo' : (ctx) => UserInfoScreen(),
           '/navbarcontroller' : (ctx) => NavBarController(),
           '/chatbot' : (ctx) => ChatbotScreen(),
+          '/myproducts' : (ctx) => MyProductsScreen(),
+          '/addproduct' : (ctx) => AddProductScreen(),
+          '/weather' : (ctx) => WeatherScreen(),
         },
         initialRoute: '/init',
       ),
