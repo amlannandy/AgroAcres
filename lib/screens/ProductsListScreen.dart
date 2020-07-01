@@ -32,7 +32,6 @@ class ProductsListScreen extends StatelessWidget {
         final docs = snapshot.data.documents;
         final List<Product> products = [];
         docs.forEach((doc) => products.add(Product.fromFirestore(doc)));
-        docs.forEach((doc) => products.add(Product.fromFirestore(doc)));
         if (products.isEmpty) {
           return Center(
             child: Text(
