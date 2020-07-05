@@ -8,8 +8,9 @@ import '../../../services/LocationProvider.dart';
 class LocationInput extends StatefulWidget {
 
   final Function selectPlace;
+  final Position position;
 
-  LocationInput(this.selectPlace);
+  LocationInput(this.selectPlace, {this.position});
 
   @override
   _LocationInputState createState() => _LocationInputState();
@@ -18,6 +19,17 @@ class LocationInput extends StatefulWidget {
 class _LocationInputState extends State<LocationInput> {
 
   String _previewImageUrl;
+
+  void getExistingLocation() {
+      print("werty");
+    if (widget.position != null) {
+      final staticMapUrl = LocationProvider.generateLocationPreviewImage(widget.position.latitude, widget.position.longitude);
+      setState(() {
+        _previewImageUrl = staticMapUrl;
+      });
+      print('TESTED');
+    }
+  }
 
   Future<void> _getCurrentUserLocation() async {
     final myLocation = await Geolocator().getCurrentPosition();
@@ -40,6 +52,12 @@ class _LocationInputState extends State<LocationInput> {
       _previewImageUrl = staticMapUrl;
     });
     widget.selectPlace(selectedLocation.latitude, selectedLocation.longitude);
+  }
+
+  @override
+  void initState() {
+    getExistingLocation();
+    super.initState();
   }
 
   @override

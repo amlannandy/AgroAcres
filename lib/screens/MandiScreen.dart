@@ -4,7 +4,6 @@ import '../models/Crop.dart';
 import '../widgets/CropCard.dart';
 import '../services/MandiProvider.dart';
 import '../widgets/LoadingSpinner.dart';
-import '../widgets/FiltersBottomSheet.dart';
 
 class MandiScreen extends StatefulWidget {
 
@@ -13,16 +12,6 @@ class MandiScreen extends StatefulWidget {
 }
 
 class _MandiScreenState extends State<MandiScreen> {
-
-  final _searchController = TextEditingController();
-
-  void openFiltersSheet(BuildContext context) {
-    showModalBottomSheet(
-      backgroundColor: Colors.transparent,
-      context: context,
-      builder: (ctx) => FiltersBottomSheet(),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,27 +31,28 @@ class _MandiScreenState extends State<MandiScreen> {
           SizedBox(height: MediaQuery.of(context).size.height * 0.06),
           Container(
             width: MediaQuery.of(context).size.width,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                searchField(context),
-                SizedBox(width: 6),
-                filterButton(context),
-              ],
-            ),
+            child: header(context),
           ),
           Container(
-            height: MediaQuery.of(context).size.height * 0.78,
+            height: MediaQuery.of(context).size.height * 0.8,
             padding: const EdgeInsets.only(
               top: 10,
             ),
             child: FutureBuilder<List<Crop>>(
               future: MandiProvider.fetchCropsData(),
               builder: (context, snapshot) {
+                List<Crop> crops = MandiProvider.getCrops();
+                if (crops.isNotEmpty) {
+                  return ListView.builder(
+                    padding: const EdgeInsets.all(0),
+                    itemBuilder: (ctx, index) => CropCard(crops[index]),
+                    itemCount: crops.length,
+                  );
+                }
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return loadingSpinner();
                 }
-                final crops = snapshot.data;
+                crops = snapshot.data;
                 return ListView.builder(
                   padding: const EdgeInsets.all(0),
                   itemBuilder: (ctx, index) => CropCard(crops[index]),
@@ -76,64 +66,19 @@ class _MandiScreenState extends State<MandiScreen> {
     );
   }
 
-  Widget searchField(BuildContext context) {
+  Widget header(BuildContext context) {
     return Container(
+      alignment: Alignment.center,
       width: MediaQuery.of(context).size.width * 0.8,
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: Colors.green[800],
-          width: 0.5,
-        ),
-        borderRadius: BorderRadius.circular(20.0),
-        color: Colors.white
-      ),
       margin: const EdgeInsets.symmetric(vertical: 5.0),
-      child: Row(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
-            child: Icon(
-              Icons.search,
-              color: Colors.green[800],
-            ),
-          ),
-          Container(
-            height: 30.0,
-            width: 0.5,
-            color: Colors.green[800],
-            margin: const EdgeInsets.only(left: 00.0, right: 10.0),
-          ),
-          Expanded(
-            child: TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: 'Search',
-                hintStyle: TextStyle(
-                  color: Colors.grey,
-                  fontFamily: 'Varela'
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget filterButton(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadiusDirectional.circular(35),
-        color: Colors.white,
-      ),
-      child: IconButton(
-        color: Colors.white,
-        icon: Icon(
-          Icons.menu,
-          color: Colors.green[800],
-        ),
-        onPressed: () => openFiltersSheet(context),
+      child: Text(
+        'Mandi Prices',
+        style: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontFamily: 'Lato',
+          fontSize: 20,
+        )
       ),
     );
   }

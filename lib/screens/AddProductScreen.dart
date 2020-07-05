@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:AgroAcres/models/Product.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:path/path.dart' as Path;
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -10,6 +11,7 @@ import '../widgets/ImageInput.dart';
 import '../services/ShopProvider.dart';
 import '../widgets/CustomDarkButton.dart';
 import '../widgets/CustomTextField.dart';
+import '../screens/CalenderScreen/local_widgets/Locationinput.dart';
 
 class AddProductScreen extends StatefulWidget {
 
@@ -31,6 +33,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
   final _quantityController = TextEditingController();
   final _quantityNameController = TextEditingController();
 
+  Position _position;
   File imageFile;
   String imageUrl = "";
 
@@ -40,6 +43,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
       fetchExistingValues();
     }
     super.initState();
+  }
+
+  void selectPlace(double lat, double long) {
+    _position = Position(latitude: lat, longitude: long);
   }
 
   void selectImage(File image) async {
@@ -63,6 +70,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
       _quantityController.text = product.quantity.toString();
       _quantityNameController.text = product.quanityName;
       imageUrl = product.imageUrl;
+      _position = product.position;
     });
   }
 
@@ -86,6 +94,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
             ImageInput(
               selectImage,
               imageUrl: imageUrl,
+            ),
+            LocationInput(
+              selectPlace,
+              position: _position,
             ),
             CustomTextField(
               controller: _priceController,
@@ -115,6 +127,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 quantity: _quantityController.text,
                 quantityName: _quantityNameController.text,
                 imageUrl: imageUrl,
+                position: _position,
               ) : () => ShopProvider.editProduct(
                 context, 
                 widget.productId,
@@ -123,6 +136,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 quantity: _quantityController.text,
                 quantityName: _quantityNameController.text,
                 imageUrl: imageUrl,
+                position: _position,
               ),
             ),
           ],

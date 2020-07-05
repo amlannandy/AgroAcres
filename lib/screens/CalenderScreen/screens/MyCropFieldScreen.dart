@@ -32,7 +32,9 @@ class MyCropFieldScreen extends StatelessWidget {
               children: <Widget>[
                 fieldDetails(
                   imageUrl: cropField.imageUrl,
-                  cropName: cropField.crop
+                  cropName: cropField.crop,
+                  startDate: cropField.startTime,
+                  endDate: CropFieldProvider.getFormattedDatePlusDays(cropField.startDate, cropField.harvestTime),
                 ),
                 PrimaryButton(
                   text: 'VIEW CALENDER',

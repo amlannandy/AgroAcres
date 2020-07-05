@@ -56,6 +56,8 @@ class CropFieldProvider {
     _db.collection('users').document(user.uid).updateData({
       'fieldId': fieldId,
     });
+    DocumentSnapshot snapshot = await _db.collection('cropData').document(cropName).get();
+    int harvestTime = snapshot['harvestTime'];
     _db.collection('cropfields').document(fieldId).setData({
       'crop': cropName,
       'startDate': startTimestamp,
@@ -63,6 +65,7 @@ class CropFieldProvider {
       'startTime': startDate,
       'userId': user.uid,
       'imageUrl': imageUrl,
+      'harvestTime' : harvestTime,
     });
     Fluttertoast.showToast(msg: 'Crop Field uploaded', backgroundColor: Colors.green, textColor: Colors.white);
     Navigator.of(context).pop();
@@ -89,7 +92,7 @@ class CropFieldProvider {
           style: TextStyle(color: Colors.black, fontFamily: 'Lato'),
         ),
         content: Text(
-          'Are you sure you want to delete this product',
+          'Are you sure you want to delete your field?',
           style: TextStyle(color: Colors.black, fontFamily: 'Lato'),
         ),
         actions: <Widget>[

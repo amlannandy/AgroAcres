@@ -44,7 +44,7 @@ class _CropDropdownListState extends State<CropDropdownList> {
                     }
                     return ListView.builder(
                       itemBuilder: (ctx, index) => RadioListTile(
-                        title: Text(crops[index]),
+                        title: Text(crops[index].toString()),
                         groupValue: this.selectedCrop,
                         value: crops[index],
                         onChanged: (val) {

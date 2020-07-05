@@ -103,7 +103,7 @@ Widget expandedContent(String title, String subtitle, String link, BuildContext 
           ),
         ),
         GestureDetector(
-          onTap: () => Navigator.of(context).pushReplacement(MaterialPageRoute(
+          onTap: () => Navigator.of(context).push(MaterialPageRoute(
             builder: (ctx) => WebViewScreen(title, link),
           )),
           child: Padding(

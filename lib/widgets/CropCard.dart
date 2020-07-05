@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../models/Crop.dart';
+import '../screens/CalenderScreen/local_widgets/FieldDetails.dart';
 
 class CropCard extends StatelessWidget {
 
@@ -21,67 +21,79 @@ class CropCard extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 12,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                pocketContainer(Icons.restaurant, crop.name),
-                SizedBox(height: 12.5),
-                pocketContainer(FontAwesomeIcons.rupeeSign, crop.maxPrice + ' / kg'),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget pocketContainer(IconData iconData, String value) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        border: Border.all(
-          width: 0.4,
-          color: Colors.grey[400],
-        )
-      ),
-      child: Row(
-        children: <Widget>[
+          SizedBox(height: 10),
           Container(
-            decoration: BoxDecoration(
-              color: Colors.green[800],
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(15),
-                bottomLeft: Radius.circular(15),
-              )
-            ),
-            padding: const EdgeInsets.all(5),
-            child: Icon(
-              iconData,
-              color: Colors.white,
-              size: 30,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(left: 8),
+            alignment: Alignment.centerLeft,
             child: Text(
-              value,
+              crop.name,
               style: TextStyle(
-                color: Colors.grey,
+                color: Colors.black,
                 fontFamily: 'Lato',
-                fontSize: 20,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              pocketContainer('District',crop.district),
+              pocketContainer('Arrival',crop.arrivalDate),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              pocketData('Min Price', '₹ ' + crop.minPrice),
+              pocketData('Modal Price', '₹ ' + crop.modalPrice),
+              pocketData('Max Price', '₹ ' + crop.maxPrice),
+            ],
+          )
+        ],
+      )
+    );
+  }
+
+  Widget pocketContainer(String title, String value) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: <Widget>[
+          Text(
+            title,
+            style: TextStyle(
+              color: Colors.grey,
+              fontFamily: 'Lato',
+              fontSize: 14,
+            ),
+          ),
+          SizedBox(width: 5,),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              border: Border.all(
+                width: 0.4,
+                color: Colors.grey[400],
+              )
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                value,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: 'Lato',
+                  fontSize: 14,
+                ),
+              ),
+            )
+          ),
         ],
       ),
     );
-  }
+  } 
 }

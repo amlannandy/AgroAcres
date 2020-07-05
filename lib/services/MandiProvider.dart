@@ -5,7 +5,8 @@ import '../models/Crop.dart';
 
 class MandiProvider {
 
-  static final url = 'https://api.data.gov.in/resource/9ef84268-d588-465a-a308-a864a43d0070?api-key=579b464db66ec23bdd0000019b744bced621467059a863d32c0bfdf0&format=json&offset=0&limit=10';
+  static final url = 'https://api.data.gov.in/resource/9ef84268-d588-465a-a308-a864a43d0070?api-key=579b464db66ec23bdd0000019b744bced621467059a863d32c0bfdf0&format=json&offset=0&limit=30';
+  static List<Crop> _crops = [];
 
   static Future<List<Crop>> fetchCropsData() async {
     try {
@@ -14,11 +15,16 @@ class MandiProvider {
       final data = json.decode(response.body);
       final List docs = data['records'];
       docs.forEach((doc) => crops.add(Crop.fromJson(doc)));
-      return crops;
+      _crops = crops;
+      return _crops;
     } catch (e) {
       print(e);
     }
     return [];
+  }
+
+  static List<Crop> getCrops() {
+    return [..._crops];
   }
 
 }

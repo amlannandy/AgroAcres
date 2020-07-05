@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget fieldDetails({String cropName, String imageUrl}) {
+Widget fieldDetails({String cropName, String imageUrl, String startDate, String endDate}) {
   return Container(
     padding: const EdgeInsets.symmetric(
       vertical: 20,
@@ -38,8 +38,8 @@ Widget fieldDetails({String cropName, String imageUrl}) {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            pocketData('Sowing Date', '24/05/2020'),
-            pocketData('Harvest Date', '18/08/2020'),
+            pocketData('Sowing Date', startDate),
+            pocketData('Harvest Date', endDate),
           ],
         ),
       ],

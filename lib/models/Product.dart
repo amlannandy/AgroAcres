@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 
 class Product {
 
@@ -9,6 +10,8 @@ class Product {
   final String imageUrl;
   final int quantity;
   final String quanityName;
+  final String phoneNumber;
+  final Position position;
 
   const Product({
     @required this.id,
@@ -17,6 +20,8 @@ class Product {
     @required this.imageUrl,
     @required this.quantity,
     @required this.quanityName,
+    @required this.phoneNumber,
+    @required this.position,
   });
 
   factory Product.fromFirestore(DocumentSnapshot snapshot) {
@@ -31,6 +36,8 @@ class Product {
       imageUrl: data['imageUrl'] ?? null,
       quantity: data['quantity'] ?? null,
       quanityName: data['quantityName'] ?? null,
+      phoneNumber: data['phoneNumber'] ?? null,
+      position: Position(latitude: data['position'].latitude, longitude: data['position'].longitude) ?? null,
     );
     return product;
   }

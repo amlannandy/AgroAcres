@@ -10,6 +10,7 @@ class CropField {
   final Timestamp startDate;
   final String imageUrl;
   final String startTime;
+  final int harvestTime;
 
   const CropField({
     @required this.id,
@@ -18,6 +19,7 @@ class CropField {
     @required this.startDate,
     @required this.startTime,
     @required this.imageUrl,
+    @required this.harvestTime,
   });
 
   factory CropField.fromFirestore(DocumentSnapshot snapshot) {
@@ -29,6 +31,7 @@ class CropField {
       startDate: doc['startDate'] ?? null,
       startTime: doc['startTime'] ?? null,
       imageUrl: doc['imageUrl'] ?? null,
+      harvestTime: doc['harvestTime'] ?? null,
     );
     return field;
   }

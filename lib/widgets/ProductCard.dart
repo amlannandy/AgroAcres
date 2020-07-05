@@ -53,7 +53,13 @@ class ProductCard extends StatelessWidget {
                   children: <Widget>[
                     pocketContainer(Icons.restaurant, product.title),
                     SizedBox(height: 12.5),
-                    pocketContainer(FontAwesomeIcons.rupeeSign, product.price.toStringAsFixed(0) + ' / ' + product.quanityName),
+                    Row(
+                      children: <Widget>[
+                        smallPocketContainer(FontAwesomeIcons.rupeeSign, product.price.toStringAsFixed(0) + ' / ' + product.quanityName),
+                        SizedBox(width: 5),
+                        smallPocketContainer(FontAwesomeIcons.list, product.quantity.toString() + ' ' + product.quanityName),
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -109,6 +115,48 @@ class ProductCard extends StatelessWidget {
   }
 }
 
+Widget smallPocketContainer(IconData iconData, String value) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(
+          width: 0.4,
+          color: Colors.grey[400],
+        )
+      ),
+      child: Row(
+        children: <Widget>[
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.green[800],
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15),
+                bottomLeft: Radius.circular(15),
+              )
+            ),
+            padding: const EdgeInsets.all(6),
+            child: Icon(
+              iconData,
+              color: Colors.white,
+              size: 15,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(6),
+            child: Text(
+              value,
+              style: TextStyle(
+                color: Colors.grey,
+                fontFamily: 'Lato',
+                fontSize: 12,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
 Widget viewButtonsRow(BuildContext context, Product product) {
   return Container(
     color: Colors.transparent,
@@ -116,14 +164,14 @@ Widget viewButtonsRow(BuildContext context, Product product) {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         CustomYellowButton(
-          text: 'Buy',
-          icon: FontAwesomeIcons.buyNLarge,
-          onPress: () {}
+          text: 'Call',
+          icon: Icons.phone,
+          onPress: () => ShopProvider.callSeller(product.phoneNumber),
         ),
         CustomYellowButton(
-          text: 'Details',
-          icon: FontAwesomeIcons.pager,
-          onPress: () {}
+          text: 'Location',
+          icon: Icons.my_location,
+          onPress: () => ShopProvider.mapForDestination(product.position.latitude, product.position.longitude),
         ),
       ],
     ),

@@ -57,7 +57,7 @@ class _DateFieldState extends State<DateField> {
               },
               decoration: InputDecoration(
                 border: InputBorder.none,
-                hintText: 'Sowing Date',
+                hintText: 'Sowing/Land Preparation Date',
                 hintStyle: TextStyle(
                   color: Colors.grey,
                   fontFamily: 'Varela'
