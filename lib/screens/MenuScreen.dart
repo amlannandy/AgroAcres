@@ -37,8 +37,8 @@ class MenuScreen extends StatelessWidget {
             icon: Icons.storage,
           ),
           menuItem(
-            onPress: () => Navigator.of(context).pushNamed('/chatbot'),
-            title: 'Your Calender',
+            onPress: () => Navigator.of(context).pushNamed('/field'),
+            title: 'Crop Calender',
             icon: Icons.calendar_today,
           ),
           menuItem(

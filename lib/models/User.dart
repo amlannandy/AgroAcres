@@ -11,6 +11,7 @@ class User {
   final String city;
   final Position location;
   final String aadharNo;
+  final String fieldId;
 
   User({
     this.userId,
@@ -21,23 +22,8 @@ class User {
     this.aadharNo,
     this.location,
     this.imageUrl,
+    this.fieldId,
   });
-
-  factory User.fromMap(Map data) {
-    return User(
-      userId: data['userId'] ?? null,
-      name: data['name'] ?? null,
-      age: data['age'] ?? null,
-      phone: data['phone'] ?? null,
-      city: data['city'] ?? null,
-      aadharNo: data['aadharNumber'] ?? null,
-      imageUrl: data['imageUrl'] ?? "https://firebasestorage.googleapis.com/v0/b/agroacres-bbsr.appspot.com/o/user_profile_photos%2Fdefault.png?alt=media&token=bce57e61-72f5-4a9e-a211-c40523912169",
-      location: Position(
-        latitude: data['location'].latitude,
-        longitude: data['location'].longitude,
-      ) ?? null,
-    );
-  }
 
   factory User.fromFirestore(DocumentSnapshot snapshot) {
     Map data = snapshot.data;
@@ -55,6 +41,7 @@ class User {
         latitude: data['location'].latitude,
         longitude: data['location'].longitude,
       ) ?? null,
+      fieldId: data['fieldId'] ?? null,
     );
     return user;
   }

@@ -11,6 +11,9 @@ import './screens/NavBarController.dart';
 import './screens/MyProductsScreen.dart';
 import './services/WeatherProvider.dart';
 import './screens/AddProductScreen.dart';
+import './screens/CalenderScreen/screens/FieldScreen.dart';
+import './screens/CalenderScreen/screens/CalenderScreen.dart';
+import './screens/CalenderScreen/screens/AddCropFieldScreen.dart';
 
 void main() => runApp(MyApp());
 
@@ -26,6 +29,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         theme: ThemeData(
+          primarySwatch: Colors.green,
           primaryColor: Colors.lightGreen,
           accentColor: Colors.green[600],
           textTheme: TextTheme(
@@ -51,6 +55,9 @@ class MyApp extends StatelessWidget {
           '/myproducts' : (ctx) => MyProductsScreen(),
           '/addproduct' : (ctx) => AddProductScreen(),
           '/weather' : (ctx) => WeatherScreen(),
+          '/field' : (ctx) => FieldScreen(),
+          '/calender' : (ctx) => CalenderScreen(),
+          '/addcropfield' : (ctx) => AddCropFieldScreen(),
         },
         initialRoute: '/init',
       ),

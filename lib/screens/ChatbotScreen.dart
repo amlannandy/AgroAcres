@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import '../widgets/PrimaryButton.dart';
 import '../screens/WebViewScreen.dart';
 
+const ENGLISH_URL = 'https://web-chat.global.assistant.watson.cloud.ibm.com/preview.html?region=eu-gb&integrationID=f5f43d26-7f4b-4766-8ab0-427422369987&serviceInstanceID=cd1938af-8ea5-4c50-a686-44c85b08756b';
+const HINDI_URL = 'https://web-chat.global.assistant.watson.cloud.ibm.com/preview.html?region=eu-gb&integrationID=d90dc56f-613a-4ca3-a586-dfebb09341d5&serviceInstanceID=cd1938af-8ea5-4c50-a686-44c85b08756b';
+
 class ChatbotScreen extends StatelessWidget {
 
   @override
@@ -50,14 +53,14 @@ class ChatbotScreen extends StatelessWidget {
               text: 'English',
               color: Colors.green[800],
               press: () => Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (ctx) => WebViewScreen(true),
+                builder: (ctx) => WebViewScreen('Welcome', ENGLISH_URL),
               ))
             ),
             PrimaryButton(
               text: 'Hindi',
               color: Colors.green[800],
               press: () => Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (ctx) => WebViewScreen(false),
+                builder: (ctx) => WebViewScreen('स्वागत हे', HINDI_URL),
               ))
             ),
           ],
