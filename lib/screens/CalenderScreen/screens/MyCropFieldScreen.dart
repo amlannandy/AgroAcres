@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../local_widgets/CustomAppBar.dart';
 import '../../../models/CropField.dart';
 import '../local_widgets/FieldDetails.dart';
 import '../../../widgets/PrimaryButton.dart';
@@ -17,39 +18,42 @@ class MyCropFieldScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      child: StreamBuilder<CropField>(
-        stream: userDatabaseService.streamCropField(fieldId),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting || !snapshot.hasData) {
-            return loadingSpinner();
+    return Scaffold(
+      appBar: customAppBar(context, 'My Crop Field'),
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        child: StreamBuilder<CropField>(
+          stream: userDatabaseService.streamCropField(fieldId),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting || !snapshot.hasData) {
+              return loadingSpinner();
+            }
+            final cropField = snapshot.data;
+            return SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  fieldDetails(
+                    imageUrl: cropField.imageUrl,
+                    cropName: cropField.crop,
+                    startDate: cropField.startTime,
+                    endDate: CropFieldProvider.getFormattedDatePlusDays(cropField.startDate, cropField.harvestTime),
+                  ),
+                  PrimaryButton(
+                    text: 'VIEW CALENDER',
+                    press: () => Navigator.of(context).pushNamed('/calender', arguments: [cropField.crop, cropField.startDate]),
+                    color: Colors.green[800]
+                  ),
+                  PrimaryButton(
+                    text: 'DELETE CROP FIELD',
+                    press: () => CropFieldProvider.deleteCropFieldConfirmation(context, fieldId),
+                    color: Colors.green[800]
+                  ),
+                ],
+              ),
+            );
           }
-          final cropField = snapshot.data;
-          return SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                fieldDetails(
-                  imageUrl: cropField.imageUrl,
-                  cropName: cropField.crop,
-                  startDate: cropField.startTime,
-                  endDate: CropFieldProvider.getFormattedDatePlusDays(cropField.startDate, cropField.harvestTime),
-                ),
-                PrimaryButton(
-                  text: 'VIEW CALENDER',
-                  press: () => Navigator.of(context).pushNamed('/calender', arguments: [cropField.crop, cropField.startDate]),
-                  color: Colors.green[800]
-                ),
-                PrimaryButton(
-                  text: 'DELETE CROP FIELD',
-                  press: () => CropFieldProvider.deleteCropFieldConfirmation(context, fieldId),
-                  color: Colors.green[800]
-                ),
-              ],
-            ),
-          );
-        }
+        ),
       ),
     );
   }

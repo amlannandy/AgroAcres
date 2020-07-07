@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
-import '../screens/MapScreen.dart';
-import '../../../widgets/LightIconButton.dart';
-import '../../../services/LocationProvider.dart';
+import '../screens/CalenderScreen/screens/MapScreen.dart';
+import '../widgets/LightIconButton.dart';
 
 class LocationInput extends StatefulWidget {
 
@@ -21,21 +20,17 @@ class _LocationInputState extends State<LocationInput> {
   String _previewImageUrl;
 
   void getExistingLocation() {
-      print("werty");
     if (widget.position != null) {
-      final staticMapUrl = LocationProvider.generateLocationPreviewImage(widget.position.latitude, widget.position.longitude);
       setState(() {
-        _previewImageUrl = staticMapUrl;
+        _previewImageUrl = '';
       });
-      print('TESTED');
     }
   }
 
   Future<void> _getCurrentUserLocation() async {
     final myLocation = await Geolocator().getCurrentPosition();
-    final staticMapUrl = LocationProvider.generateLocationPreviewImage(myLocation.latitude, myLocation.longitude);
     setState(() {
-      _previewImageUrl = staticMapUrl;
+      _previewImageUrl = '';
     });
     widget.selectPlace(myLocation.latitude, myLocation.longitude);
   }
@@ -47,9 +42,8 @@ class _LocationInputState extends State<LocationInput> {
     if (selectedLocation == null) {
       return;
     }
-    final staticMapUrl = LocationProvider.generateLocationPreviewImage(selectedLocation.latitude, selectedLocation.longitude);
     setState(() {
-      _previewImageUrl = staticMapUrl;
+      _previewImageUrl = '';
     });
     widget.selectPlace(selectedLocation.latitude, selectedLocation.longitude);
   }
@@ -78,15 +72,12 @@ class _LocationInputState extends State<LocationInput> {
               border: Border.all(
                 width: 1,
                 color: Colors.grey,
-              )
+              ),
+              color: _previewImageUrl == null ? Colors.red.withOpacity(0.2) : Colors.green.withOpacity(0.2)
             ),
             child: _previewImageUrl == null ?
               Text("Select Location") :
-              Image.network(
-                _previewImageUrl,
-                fit: BoxFit.cover,
-                width: double.infinity,
-              ),
+              Text("Location Selected"),
             alignment: Alignment.center,
           ),
           Column(

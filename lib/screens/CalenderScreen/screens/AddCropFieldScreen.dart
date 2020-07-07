@@ -9,7 +9,7 @@ import '../local_widgets/DateField.dart';
 import '../local_widgets/ImageInput.dart';
 import '../local_widgets/CustomAppBar.dart';
 import '../../../widgets/PrimaryButton.dart';
-import '../local_widgets/Locationinput.dart';
+import '../../../widgets/Locationinput.dart';
 import '../local_widgets/CropDropdownField.dart';
 import '../../../services/CropFieldProvider.dart';
 

@@ -11,7 +11,7 @@ import '../widgets/ImageInput.dart';
 import '../services/ShopProvider.dart';
 import '../widgets/CustomDarkButton.dart';
 import '../widgets/CustomTextField.dart';
-import '../screens/CalenderScreen/local_widgets/Locationinput.dart';
+import '../widgets/Locationinput.dart';
 
 class AddProductScreen extends StatefulWidget {
 

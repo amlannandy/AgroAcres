@@ -80,7 +80,7 @@ class CropFieldProvider {
     });
     Fluttertoast.showToast(msg: "Product deleted");
     Navigator.of(context).pop();
-    Navigator.of(context).pushReplacementNamed('/field');
+    Navigator.of(context).pop();
   }
 
   static void deleteCropFieldConfirmation(BuildContext context, String fieldId) {

@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
           '/calender' : (ctx) => CalenderScreen(),
           '/addcropfield' : (ctx) => AddCropFieldScreen(),
         },
-        initialRoute: '/init',
+        initialRoute: '/addcropfield',
       ),
     );
   }
