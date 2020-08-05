@@ -8,6 +8,7 @@
 .buildlog/
 .history
 .svn/
+AgroAcres.code-workspace 
 
 # IntelliJ related
 *.iml
