@@ -15,7 +15,10 @@ lack of awareness among Farmers about Modern Agricultural Practices.
 
 ## Features
 
+AgroAcres helps Farmers in getting accquainted with Modern Agricultural Practices. It strives to assist the Farmer thorughout the entire crop cycle, that is from sowing of the seed to the very selling of the Crop.
+
 <div style="flex-direction: row;">
-  <img src="screenshots/login.jpg" width="150px" alt="">
-  <img src="screenshots/menu.jpg" width="150px" alt="">
+  <img src="https://github.com/amlannandy/AgroAcres/blob/master/assets/screenshots/login.jpg" width="150px" style="margin-right: 10px;" alt="">
+  <img src="https://github.com/amlannandy/AgroAcres/blob/master/assets/screenshots/otp.jpg" width="150px" style="margin-right: 10px;" alt="">
+  <img src="https://github.com/amlannandy/AgroAcres/blob/master/assets/screenshots/menu.jpg" width="150px" alt="">
 </div>
