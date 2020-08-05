@@ -5,20 +5,17 @@ import 'package:image_picker/image_picker.dart';
 import '../widgets/LightIconButton.dart';
 
 class ImageInput extends StatefulWidget {
-
   final Function selectImage;
   final String imageUrl;
+  final bool isEnglish;
 
-  ImageInput(this.selectImage, {this.imageUrl});
-  
+  ImageInput(this.selectImage, {this.imageUrl, this.isEnglish = true});
+
   @override
   _ImageInputState createState() => _ImageInputState();
-
 }
 
-
 class _ImageInputState extends State<ImageInput> {
-
   File _storedImage;
 
   Future _takePicture() async {
@@ -26,8 +23,7 @@ class _ImageInputState extends State<ImageInput> {
       source: ImageSource.camera,
       maxWidth: 600,
     );
-    if (imageFile == null)
-      return;
+    if (imageFile == null) return;
     setState(() {
       _storedImage = imageFile;
     });
@@ -40,8 +36,7 @@ class _ImageInputState extends State<ImageInput> {
       source: ImageSource.gallery,
       maxWidth: 600,
     );
-    if (imageFile == null)
-      return;
+    if (imageFile == null) return;
     setState(() {
       _storedImage = imageFile;
     });
@@ -60,12 +55,11 @@ class _ImageInputState extends State<ImageInput> {
         children: <Widget>[
           SizedBox(height: 10),
           Text(
-            "Add an Image",
+            widget.isEnglish ? "Add an Image" : "एक छवि जोड़ें",
             style: TextStyle(
-              fontFamily: 'Lato',
-              fontSize: 18,
-              color: Colors.black.withOpacity(0.6)
-            ),
+                fontFamily: 'Lato',
+                fontSize: 18,
+                color: Colors.black.withOpacity(0.6)),
           ),
           SizedBox(height: 10),
           Row(
@@ -80,22 +74,24 @@ class _ImageInputState extends State<ImageInput> {
                 height: 100,
                 width: 150,
                 decoration: BoxDecoration(
-                  border: Border.all(
-                    width: 1,
-                    color: Colors.grey,
-                  )
-                ),
-                child: (widget.imageUrl.isNotEmpty && _storedImage == null) ? Image.network(
-                  widget.imageUrl,
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                ) : _storedImage == null ?
-                  Text("No Image") :
-                  Image.file(
-                    _storedImage,
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                  ),
+                    border: Border.all(
+                  width: 1,
+                  color: Colors.grey,
+                )),
+                child: (widget.imageUrl.isNotEmpty && _storedImage == null)
+                    ? Image.network(
+                        widget.imageUrl,
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                      )
+                    : _storedImage == null
+                        ? Text(
+                            widget.isEnglish ? "No Image" : "कोई तस्वीर नहीं")
+                        : Image.file(
+                            _storedImage,
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                          ),
                 alignment: Alignment.center,
               ),
               Column(
@@ -103,13 +99,13 @@ class _ImageInputState extends State<ImageInput> {
                 children: <Widget>[
                   LightIconButton(
                     icon: Icons.camera_alt,
-                    text: "Camera",
+                    text: widget.isEnglish ? "Camera" : "कैमरा",
                     function: _takePicture,
                   ),
                   LightIconButton(
                     icon: Icons.filter,
-                    text: "Gallery",
-                    function:  _uploadPicture,
+                    text: widget.isEnglish ? "Gallery" : "गेलरी",
+                    function: _uploadPicture,
                   ),
                 ],
               )

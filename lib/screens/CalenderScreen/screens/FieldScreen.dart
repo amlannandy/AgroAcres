@@ -11,37 +11,40 @@ import '../../../widgets/LoadingSpinner.dart';
 import '../../../services/UserDatabaseService.dart';
 
 class FieldScreen extends StatelessWidget {
-
   final _db = Firestore.instance;
   final UserDatabaseService userDatabaseService = UserDatabaseService();
 
   @override
   Widget build(BuildContext context) {
-
     final user = Provider.of<FirebaseUser>(context);
 
     return Scaffold(
       appBar: customAppBar(context, 'Crop Calender'),
       backgroundColor: Colors.white,
-      body: user == null ? loadingSpinner() : StreamBuilder<QuerySnapshot>(
-        stream: _db.collection('cropfields').where('userId', isEqualTo: user.uid).snapshots(),
-        builder: (context, snapshot) {
-          List<CropField> fields = [];
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return loadingSpinner();
-          }
-          if (!snapshot.hasData) {
-            return emptyBanner(context);
-          }
-          final docs = snapshot.data.documents;
-          docs.forEach((doc) => fields.add(CropField.fromFirestore(doc)));
-          return ListView.builder(
-            padding: const EdgeInsets.all(10),
-            itemBuilder: (ctx, index) => fieldCard(context, fields[index]),
-            itemCount: fields.length,
-          );
-        }
-      ),
+      body: user == null
+          ? loadingSpinner()
+          : StreamBuilder<QuerySnapshot>(
+              stream: _db
+                  .collection('cropfields')
+                  .where('userId', isEqualTo: user.uid)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                List<CropField> fields = [];
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return loadingSpinner();
+                }
+                if (!snapshot.hasData) {
+                  return emptyBanner(context);
+                }
+                final docs = snapshot.data.documents;
+                docs.forEach((doc) => fields.add(CropField.fromFirestore(doc)));
+                return ListView.builder(
+                  padding: const EdgeInsets.all(10),
+                  itemBuilder: (ctx, index) =>
+                      fieldCard(context, fields[index]),
+                  itemCount: fields.length,
+                );
+              }),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.green[800],
         child: Icon(
@@ -52,6 +55,4 @@ class FieldScreen extends StatelessWidget {
       ),
     );
   }
-
-  
 }

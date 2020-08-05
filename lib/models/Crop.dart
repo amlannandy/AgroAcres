@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class Crop {
-
   final String name;
   final String variety;
   final String minPrice;
@@ -23,7 +22,6 @@ class Crop {
   });
 
   factory Crop.fromJson(Map crop) {
-    print(crop);
     return Crop(
       name: crop['commodity'],
       variety: crop['variety'],
@@ -35,5 +33,4 @@ class Crop {
       arrivalDate: crop['arrival_date'] ?? '10/10/10',
     );
   }
-
 }

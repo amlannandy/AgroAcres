@@ -1,18 +1,16 @@
-import 'package:AgroAcres/widgets/LoadingSpinner.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 
+import '../widgets/LoadingSpinner.dart';
 import '../services/WeatherProvider.dart';
 
 class WeatherScreen extends StatefulWidget {
-
   @override
   _WeatherScreenState createState() => _WeatherScreenState();
 }
 
 class _WeatherScreenState extends State<WeatherScreen> {
-
   var _isLoading = false;
   var _isInit = true;
 
@@ -30,8 +28,12 @@ class _WeatherScreenState extends State<WeatherScreen> {
           _isLoading = true;
         });
         getUserLocation().then((value) {
-          Provider.of<WeatherProvider>(context, listen: false).getFiveDayForecast(currentPosition).then((_) {
-            Provider.of<WeatherProvider>(context, listen: false).getForecast(currentPosition).then((_) {
+          Provider.of<WeatherProvider>(context, listen: false)
+              .getFiveDayForecast(currentPosition)
+              .then((_) {
+            Provider.of<WeatherProvider>(context, listen: false)
+                .getForecast(currentPosition)
+                .then((_) {
               setState(() {
                 _isLoading = false;
               });
@@ -48,36 +50,38 @@ class _WeatherScreenState extends State<WeatherScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(context, 'Weather'),
-      body: _isLoading ? loadingSpinner() : SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 15,
-          ),
-          child: Column(
-            children: <Widget>[
-              Container(
-                padding: const EdgeInsets.all(10),
-                child: Text(
-                  "5 Day Forecast",
-                  style: TextStyle(
-                    fontFamily: 'Lato',
-                    fontSize: 20,
-                    color: Colors.black.withOpacity(0.8),
-                    fontWeight: FontWeight.bold,
-                  ),
+      body: _isLoading
+          ? loadingSpinner()
+          : SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 15,
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      child: Text(
+                        "5 Day Forecast",
+                        style: TextStyle(
+                          fontFamily: 'Lato',
+                          fontSize: 20,
+                          color: Colors.black.withOpacity(0.8),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    forecastRow(),
+                    SizedBox(height: 20),
+                    temperatureRow(),
+                    SizedBox(height: 40),
+                    miscRow(),
+                    SizedBox(height: 20),
+                  ],
                 ),
               ),
-              SizedBox(height: 10),
-              forecastRow(),
-              SizedBox(height: 20),
-              temperatureRow(),
-              SizedBox(height: 40),
-              miscRow(),
-              SizedBox(height: 20),
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 
@@ -110,7 +114,9 @@ class _WeatherScreenState extends State<WeatherScreen> {
         Container(
           padding: const EdgeInsets.all(10),
           child: Text(
-            _isLoading ? 'Loading...' : Provider.of<WeatherProvider>(context).getLocation(),
+            _isLoading
+                ? 'Loading...'
+                : Provider.of<WeatherProvider>(context).getLocation(),
             style: TextStyle(
               fontFamily: 'Lato',
               fontSize: 18,
@@ -393,11 +399,10 @@ class _WeatherScreenState extends State<WeatherScreen> {
       height: 140,
       padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
-        border: Border.all(
-          color: Colors.black.withOpacity(0.8),
-          width: 0.4,
-        )
-      ),
+          border: Border.all(
+        color: Colors.black.withOpacity(0.8),
+        width: 0.4,
+      )),
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: <Widget>[
@@ -408,12 +413,11 @@ class _WeatherScreenState extends State<WeatherScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                    padding: const EdgeInsets.all(10),
-                    child: Icon(
-                      Icons.wb_sunny,
-                      color: Colors.black.withOpacity(0.8),
-                    )
-                  ),
+                      padding: const EdgeInsets.all(10),
+                      child: Icon(
+                        Icons.wb_sunny,
+                        color: Colors.black.withOpacity(0.8),
+                      )),
                   Container(
                     padding: const EdgeInsets.all(10),
                     child: Text(
@@ -468,7 +472,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
                   Container(
                     padding: const EdgeInsets.all(10),
                     child: Text(
-                      Provider.of<WeatherProvider>(context).getDayOneCloudiness(),
+                      Provider.of<WeatherProvider>(context)
+                          .getDayOneCloudiness(),
                       style: TextStyle(
                         fontFamily: 'Lato',
                         fontSize: 18,
@@ -509,7 +514,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
                   Container(
                     padding: const EdgeInsets.all(10),
                     child: Text(
-                      Provider.of<WeatherProvider>(context).getDayTwoCloudiness(),
+                      Provider.of<WeatherProvider>(context)
+                          .getDayTwoCloudiness(),
                       style: TextStyle(
                         fontFamily: 'Lato',
                         fontSize: 18,
@@ -550,7 +556,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
                   Container(
                     padding: const EdgeInsets.all(10),
                     child: Text(
-                      Provider.of<WeatherProvider>(context).getDayThreeCloudiness(),
+                      Provider.of<WeatherProvider>(context)
+                          .getDayThreeCloudiness(),
                       style: TextStyle(
                         fontFamily: 'Lato',
                         fontSize: 18,
@@ -591,7 +598,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
                   Container(
                     padding: const EdgeInsets.all(10),
                     child: Text(
-                      Provider.of<WeatherProvider>(context).getDayFourCloudiness(),
+                      Provider.of<WeatherProvider>(context)
+                          .getDayFourCloudiness(),
                       style: TextStyle(
                         fontFamily: 'Lato',
                         fontSize: 18,
@@ -632,7 +640,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
                   Container(
                     padding: const EdgeInsets.all(10),
                     child: Text(
-                      Provider.of<WeatherProvider>(context).getDayFiveCloudiness(),
+                      Provider.of<WeatherProvider>(context)
+                          .getDayFiveCloudiness(),
                       style: TextStyle(
                         fontFamily: 'Lato',
                         fontSize: 18,

@@ -1,15 +1,15 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../models/User.dart';
 import '../widgets/UserInfo.dart' as UserInfo;
 import '../widgets/MenuItem.dart';
 import '../services/UserInfoProvider.dart';
+import '../services/LocalizationProvider.dart';
 import '../services/UserDatabaseService.dart';
 
 class MenuScreen extends StatelessWidget {
-
   final UserDatabaseService userDatabaseService = UserDatabaseService();
 
   Widget userInfo(FirebaseUser user) {
@@ -24,8 +24,9 @@ class MenuScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final user = Provider.of<FirebaseUser>(context);
+    bool isEnglish =
+        Provider.of<LocalizationProvider>(context).getCurrentLanguage() == 'en';
 
     return SingleChildScrollView(
       child: Column(
@@ -33,27 +34,32 @@ class MenuScreen extends StatelessWidget {
           userInfo(user),
           menuItem(
             onPress: () => Navigator.of(context).pushNamed('/myproducts'),
-            title: 'My Products',
+            title: isEnglish ? 'My Products' : 'मेरे उत्पाद',
             icon: Icons.storage,
           ),
           menuItem(
             onPress: () => Navigator.of(context).pushNamed('/field'),
-            title: 'Crop Calender',
+            title: isEnglish ? 'Crop Calender' : 'फसल कैलेंडर',
             icon: Icons.calendar_today,
           ),
           menuItem(
             onPress: () => Navigator.of(context).pushNamed('/chatbot'),
-            title: 'Chatbot',
+            title: isEnglish ? 'Chatbot' : 'बॉट चैट करें',
             icon: Icons.chat_bubble_outline,
           ),
           menuItem(
             onPress: () => Navigator.of(context).pushNamed('/weather'),
-            title: 'Weather Forecast',
+            title: isEnglish ? 'Weather Forecast' : 'मौसम पूर्वानुमान',
             icon: Icons.cloud,
           ),
           menuItem(
+            onPress: () => Navigator.of(context).pushNamed('/settings'),
+            title: isEnglish ? 'Settings' : 'समायोजन',
+            icon: Icons.settings,
+          ),
+          menuItem(
             onPress: () => UserInfoProvider.logOut(context),
-            title: 'Log out',
+            title: isEnglish ? 'Log out' : 'लॉग आउट',
             icon: Icons.exit_to_app,
           ),
         ],

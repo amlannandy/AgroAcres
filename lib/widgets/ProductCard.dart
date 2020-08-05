@@ -7,11 +7,11 @@ import '../screens/AddProductScreen.dart';
 import '../widgets/CustomYellowButton.dart';
 
 class ProductCard extends StatelessWidget {
-
   final Product product;
   final bool updating;
+  final bool isEnglish;
 
-  ProductCard(this.product, { this.updating = false });
+  ProductCard(this.product, this.isEnglish, {this.updating = false});
 
   @override
   Widget build(BuildContext context) {
@@ -55,9 +55,17 @@ class ProductCard extends StatelessWidget {
                     SizedBox(height: 12.5),
                     Row(
                       children: <Widget>[
-                        smallPocketContainer(FontAwesomeIcons.rupeeSign, product.price.toStringAsFixed(0) + ' / ' + product.quanityName),
+                        smallPocketContainer(
+                            FontAwesomeIcons.rupeeSign,
+                            product.price.toStringAsFixed(0) +
+                                ' / ' +
+                                product.quanityName),
                         SizedBox(width: 5),
-                        smallPocketContainer(FontAwesomeIcons.list, product.quantity.toString() + ' ' + product.quanityName),
+                        smallPocketContainer(
+                            FontAwesomeIcons.list,
+                            product.quantity.toString() +
+                                ' ' +
+                                product.quanityName),
                       ],
                     ),
                   ],
@@ -66,7 +74,9 @@ class ProductCard extends StatelessWidget {
             ],
           ),
           SizedBox(height: 10),
-          updating ? editButtonsRow(context, product) : viewButtonsRow(context, product),
+          updating
+              ? editButtonsRow(context, product, isEnglish)
+              : viewButtonsRow(context, product, isEnglish),
         ],
       ),
     );
@@ -75,22 +85,20 @@ class ProductCard extends StatelessWidget {
   Widget pocketContainer(IconData iconData, String value) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        border: Border.all(
-          width: 0.4,
-          color: Colors.grey[400],
-        )
-      ),
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(
+            width: 0.4,
+            color: Colors.grey[400],
+          )),
       child: Row(
         children: <Widget>[
           Container(
             decoration: BoxDecoration(
-              color: Colors.green[800],
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(15),
-                bottomLeft: Radius.circular(15),
-              )
-            ),
+                color: Colors.green[800],
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(15),
+                  bottomLeft: Radius.circular(15),
+                )),
             padding: const EdgeInsets.all(5),
             child: Icon(
               iconData,
@@ -116,88 +124,87 @@ class ProductCard extends StatelessWidget {
 }
 
 Widget smallPocketContainer(IconData iconData, String value) {
-    return Container(
-      decoration: BoxDecoration(
+  return Container(
+    decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         border: Border.all(
           width: 0.4,
           color: Colors.grey[400],
-        )
-      ),
-      child: Row(
-        children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
+        )),
+    child: Row(
+      children: <Widget>[
+        Container(
+          decoration: BoxDecoration(
               color: Colors.green[800],
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(15),
                 bottomLeft: Radius.circular(15),
-              )
-            ),
-            padding: const EdgeInsets.all(6),
-            child: Icon(
-              iconData,
-              color: Colors.white,
-              size: 15,
-            ),
+              )),
+          padding: const EdgeInsets.all(6),
+          child: Icon(
+            iconData,
+            color: Colors.white,
+            size: 15,
           ),
-          Padding(
-            padding: const EdgeInsets.all(6),
-            child: Text(
-              value,
-              style: TextStyle(
-                color: Colors.grey,
-                fontFamily: 'Lato',
-                fontSize: 12,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-Widget viewButtonsRow(BuildContext context, Product product) {
-  return Container(
-    color: Colors.transparent,
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        CustomYellowButton(
-          text: 'Call',
-          icon: Icons.phone,
-          onPress: () => ShopProvider.callSeller(product.phoneNumber),
         ),
-        CustomYellowButton(
-          text: 'Location',
-          icon: Icons.my_location,
-          onPress: () => ShopProvider.mapForDestination(product.position.latitude, product.position.longitude),
+        Padding(
+          padding: const EdgeInsets.all(6),
+          child: Text(
+            value,
+            style: TextStyle(
+              color: Colors.grey,
+              fontFamily: 'Lato',
+              fontSize: 12,
+            ),
+          ),
         ),
       ],
     ),
   );
 }
 
-Widget editButtonsRow(BuildContext context, Product product) {
+Widget viewButtonsRow(BuildContext context, Product product, bool isEnglish) {
   return Container(
     color: Colors.transparent,
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         CustomYellowButton(
-          text: 'Edit',
+          text: isEnglish ? 'Call' : 'संपर्क',
+          icon: Icons.phone,
+          onPress: () => ShopProvider.callSeller(product.phoneNumber),
+        ),
+        CustomYellowButton(
+          text: isEnglish ? 'Location' : 'स्थान',
+          icon: Icons.my_location,
+          onPress: () => ShopProvider.mapForDestination(
+              product.position.latitude, product.position.longitude),
+        ),
+      ],
+    ),
+  );
+}
+
+Widget editButtonsRow(BuildContext context, Product product, bool isEnglish) {
+  return Container(
+    color: Colors.transparent,
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        CustomYellowButton(
+          text: isEnglish ? 'Edit' : 'संपादित करें',
           icon: FontAwesomeIcons.edit,
           onPress: () => Navigator.of(context).push(MaterialPageRoute(
             builder: (ctx) => AddProductScreen(productId: product.id),
           )),
         ),
         CustomYellowButton(
-          text: 'Delete',
+          text: isEnglish ? 'Delete' : 'मिटाओ',
           icon: FontAwesomeIcons.trash,
-          onPress: () => ShopProvider.deleteProductConfirmation(context, product.id),
+          onPress: () => ShopProvider.deleteProductConfirmation(
+              context, product.id, isEnglish),
         ),
       ],
     ),
   );
 }
-

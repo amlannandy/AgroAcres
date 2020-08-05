@@ -1,11 +1,11 @@
-import 'package:AgroAcres/services/FirebasePhoneAuth.dart';
-import 'package:AgroAcres/widgets/CustomTextField.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class LoginScreen extends StatefulWidget {
+import '../services/FirebasePhoneAuth.dart';
+import '../widgets/CustomTextField.dart';
 
+class LoginScreen extends StatefulWidget {
   static const routeName = '/login';
 
   @override
@@ -13,7 +13,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
   final _phoneController = TextEditingController();
   final _otpController = TextEditingController();
 
@@ -23,7 +22,10 @@ class _LoginScreenState extends State<LoginScreen> {
       phoneNumber = "+91$phoneNumber";
       FirebasePhoneAuth.startAuth(phoneNumber: phoneNumber);
     } else {
-      Fluttertoast.showToast(msg: "Invalid Phone Number", backgroundColor: Colors.red, textColor: Colors.white);
+      Fluttertoast.showToast(
+          msg: "Invalid Phone Number",
+          backgroundColor: Colors.red,
+          textColor: Colors.white);
     }
   }
 
@@ -59,26 +61,31 @@ class _LoginScreenState extends State<LoginScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             StreamBuilder(
-              stream: FirebasePhoneAuth.phoneAuthState.stream,
-              initialData: PhoneAuthState.Initialized,
-              builder: (context, snapshot) {
-                if (snapshot.data == PhoneAuthState.Started)
-                  return waitingBanner();
-                if (snapshot.data == PhoneAuthState.CodeSent)
-                  return otpField();
-                if (snapshot.data == PhoneAuthState.Verified) {
-                  new Future.delayed(Duration(milliseconds: 300), () {
-                    Navigator.of(context).pushReplacementNamed('/init');
-                  });
-                  return successBanner();
-                }
-                if (snapshot.data == PhoneAuthState.Error)
-                  Fluttertoast.showToast(msg: "Error during validation", backgroundColor: Colors.red, textColor: Colors.white);
-                if (snapshot.data == PhoneAuthState.Failed)
-                  Fluttertoast.showToast(msg: "Validation failed", backgroundColor: Colors.red, textColor: Colors.white);
-                return phoneNumberField();
-              }
-            ),
+                stream: FirebasePhoneAuth.phoneAuthState.stream,
+                initialData: PhoneAuthState.Initialized,
+                builder: (context, snapshot) {
+                  if (snapshot.data == PhoneAuthState.Started)
+                    return waitingBanner();
+                  if (snapshot.data == PhoneAuthState.CodeSent)
+                    return otpField();
+                  if (snapshot.data == PhoneAuthState.Verified) {
+                    new Future.delayed(Duration(milliseconds: 300), () {
+                      Navigator.of(context).pushReplacementNamed('/init');
+                    });
+                    return successBanner();
+                  }
+                  if (snapshot.data == PhoneAuthState.Error)
+                    Fluttertoast.showToast(
+                        msg: "Error during validation",
+                        backgroundColor: Colors.red,
+                        textColor: Colors.white);
+                  if (snapshot.data == PhoneAuthState.Failed)
+                    Fluttertoast.showToast(
+                        msg: "Validation failed",
+                        backgroundColor: Colors.red,
+                        textColor: Colors.white);
+                  return phoneNumberField();
+                }),
             Container(
               alignment: Alignment.centerRight,
               margin: const EdgeInsets.only(
@@ -87,22 +94,21 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               height: 60,
               child: StreamBuilder(
-                stream: FirebasePhoneAuth.phoneAuthState.stream,
-                initialData: PhoneAuthState.Initialized,
-                builder: (ctx, snapshot) {
-                  switch(snapshot.data) {
-                    case PhoneAuthState.Initialized:
-                    case PhoneAuthState.Error:
-                    case PhoneAuthState.Failed:
-                    case PhoneAuthState.AutoRetrievalTimeOut:
-                      return submitButton(context, handlePhoneNumberSubmit);
-                    case PhoneAuthState.CodeSent:
-                      return submitButton(context, handleOTPSubmit);
-                    default:
-                    return Container();
-                  }
-                }
-              ),
+                  stream: FirebasePhoneAuth.phoneAuthState.stream,
+                  initialData: PhoneAuthState.Initialized,
+                  builder: (ctx, snapshot) {
+                    switch (snapshot.data) {
+                      case PhoneAuthState.Initialized:
+                      case PhoneAuthState.Error:
+                      case PhoneAuthState.Failed:
+                      case PhoneAuthState.AutoRetrievalTimeOut:
+                        return submitButton(context, handlePhoneNumberSubmit);
+                      case PhoneAuthState.CodeSent:
+                        return submitButton(context, handleOTPSubmit);
+                      default:
+                        return Container();
+                    }
+                  }),
             ),
           ],
         ),
@@ -230,21 +236,17 @@ class _LoginScreenState extends State<LoginScreen> {
         width: 60,
         height: 60,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
+            gradient: LinearGradient(colors: [
               Colors.green[800],
               Colors.green[700],
-            ]
-          ),
-          borderRadius: BorderRadius.circular(50),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.green[800].withOpacity(0.3),
-              offset: Offset(0.0, 8.0),
-              blurRadius: 8.0
-            )
-          ]
-        ),
+            ]),
+            borderRadius: BorderRadius.circular(50),
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.green[800].withOpacity(0.3),
+                  offset: Offset(0.0, 8.0),
+                  blurRadius: 8.0)
+            ]),
         child: Material(
           color: Colors.transparent,
           child: InkWell(
@@ -260,5 +262,4 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
 }

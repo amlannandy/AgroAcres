@@ -5,18 +5,17 @@ import '../screens/CalenderScreen/screens/MapScreen.dart';
 import '../widgets/LightIconButton.dart';
 
 class LocationInput extends StatefulWidget {
-
   final Function selectPlace;
   final Position position;
+  final bool isEnglish;
 
-  LocationInput(this.selectPlace, {this.position});
+  LocationInput(this.selectPlace, {this.position, this.isEnglish = true});
 
   @override
   _LocationInputState createState() => _LocationInputState();
 }
 
 class _LocationInputState extends State<LocationInput> {
-
   String _previewImageUrl;
 
   void getExistingLocation() {
@@ -56,7 +55,6 @@ class _LocationInputState extends State<LocationInput> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 20,
@@ -69,15 +67,16 @@ class _LocationInputState extends State<LocationInput> {
             height: 100,
             width: 150,
             decoration: BoxDecoration(
-              border: Border.all(
-                width: 1,
-                color: Colors.grey,
-              ),
-              color: _previewImageUrl == null ? Colors.red.withOpacity(0.2) : Colors.green.withOpacity(0.2)
-            ),
-            child: _previewImageUrl == null ?
-              Text("Select Location") :
-              Text("Location Selected"),
+                border: Border.all(
+                  width: 1,
+                  color: Colors.grey,
+                ),
+                color: _previewImageUrl == null
+                    ? Colors.red.withOpacity(0.2)
+                    : Colors.green.withOpacity(0.2)),
+            child: _previewImageUrl == null
+                ? Text(widget.isEnglish ? "Select Location" : "स्थान चुनें")
+                : Text(widget.isEnglish ? "Location Selected" : "स्थान चयनित"),
             alignment: Alignment.center,
           ),
           Column(
@@ -85,13 +84,13 @@ class _LocationInputState extends State<LocationInput> {
             children: <Widget>[
               LightIconButton(
                 icon: Icons.my_location,
-                text: "My Location",
+                text: widget.isEnglish ? "My Location" : "मेरा स्थान",
                 function: _getCurrentUserLocation,
               ),
               LightIconButton(
                 icon: Icons.location_on,
-                text: "Pick on Map",
-                function:  _selectOnMap,
+                text: widget.isEnglish ? "Pick on Map" : "नक्शे पर चुनें",
+                function: _selectOnMap,
               ),
             ],
           )
