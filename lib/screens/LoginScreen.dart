@@ -177,7 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
             bottom: 5,
           ),
           child: Text(
-            isEnglish ? "OTP Sent" : "ओटीपी भेजा गया",
+            isEnglish ? "OTP Sent" : "ओटीपी भेजा",
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'Lato',
