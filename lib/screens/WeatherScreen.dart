@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../widgets/LoadingSpinner.dart';
 import '../services/WeatherProvider.dart';
+import '../services/LocalizationProvider.dart';
 
 class WeatherScreen extends StatefulWidget {
   @override
@@ -48,8 +49,11 @@ class _WeatherScreenState extends State<WeatherScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isEnglish =
+        Provider.of<LocalizationProvider>(context).getCurrentLanguage() == 'en';
+
     return Scaffold(
-      appBar: appBar(context, 'Weather'),
+      appBar: appBar(context, isEnglish ? 'Weather' : 'मौसम'),
       body: _isLoading
           ? loadingSpinner()
           : SingleChildScrollView(
@@ -62,7 +66,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                     Container(
                       padding: const EdgeInsets.all(10),
                       child: Text(
-                        "5 Day Forecast",
+                        isEnglish ? "5 Day Forecast" : "5 दिन का पूर्वानुमान",
                         style: TextStyle(
                           fontFamily: 'Lato',
                           fontSize: 20,
@@ -72,11 +76,11 @@ class _WeatherScreenState extends State<WeatherScreen> {
                       ),
                     ),
                     SizedBox(height: 10),
-                    forecastRow(),
+                    forecastRow(isEnglish),
                     SizedBox(height: 20),
-                    temperatureRow(),
+                    temperatureRow(isEnglish),
                     SizedBox(height: 40),
-                    miscRow(),
+                    miscRow(isEnglish),
                     SizedBox(height: 20),
                   ],
                 ),
@@ -129,7 +133,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
     );
   }
 
-  Widget temperatureRow() {
+  Widget temperatureRow(bool isEnglish) {
     return Column(
       children: <Widget>[
         Row(
@@ -145,7 +149,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
             Container(
               padding: const EdgeInsets.all(10),
               child: Text(
-                "Temperature",
+                isEnglish ? "Temperature" : "तापमान",
                 style: TextStyle(
                   fontFamily: 'Lato',
                   fontSize: 20,
@@ -164,7 +168,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                 Container(
                   padding: const EdgeInsets.all(10),
                   child: Text(
-                    "MAX",
+                    isEnglish ? "MAX" : "अधिकतम",
                     style: TextStyle(
                       fontFamily: 'Lato',
                       fontSize: 18,
@@ -191,7 +195,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                 Container(
                   padding: const EdgeInsets.all(10),
                   child: Text(
-                    "MIN",
+                    isEnglish ? "MIN" : "न्यूनतम",
                     style: TextStyle(
                       fontFamily: 'Lato',
                       fontSize: 18,
@@ -219,7 +223,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
     );
   }
 
-  Widget miscRow() {
+  Widget miscRow(bool isEnglish) {
     return Column(
       children: <Widget>[
         Row(
@@ -240,7 +244,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                     Container(
                       padding: const EdgeInsets.all(10),
                       child: Text(
-                        "Cloudiness",
+                        isEnglish ? "Cloudiness" : "बादल",
                         style: TextStyle(
                           fontFamily: 'Lato',
                           fontSize: 18,
@@ -279,7 +283,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                     Container(
                       padding: const EdgeInsets.all(10),
                       child: Text(
-                        "Humidity",
+                        isEnglish ? "Humidity" : "नमी",
                         style: TextStyle(
                           fontFamily: 'Lato',
                           fontSize: 18,
@@ -324,7 +328,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                     Container(
                       padding: const EdgeInsets.all(10),
                       child: Text(
-                        "Pressure",
+                        isEnglish ? "Pressure" : "दबाव",
                         style: TextStyle(
                           fontFamily: 'Lato',
                           fontSize: 18,
@@ -363,7 +367,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                     Container(
                       padding: const EdgeInsets.all(10),
                       child: Text(
-                        "Wind Speed",
+                        isEnglish ? "Wind Speed" : "हवा की गति",
                         style: TextStyle(
                           fontFamily: 'Lato',
                           fontSize: 18,
@@ -393,7 +397,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
     );
   }
 
-  Widget forecastRow() {
+  Widget forecastRow(bool isEnglish) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.9,
       height: 140,
@@ -421,7 +425,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                   Container(
                     padding: const EdgeInsets.all(10),
                     child: Text(
-                      "Temperature",
+                      isEnglish ? "Temperature" : "तापमान",
                       style: TextStyle(
                         fontFamily: 'Lato',
                         fontSize: 14,
@@ -432,7 +436,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                   Container(
                     padding: const EdgeInsets.all(10),
                     child: Text(
-                      "Cloudiness",
+                      isEnglish ? "Cloudiness" : "बादल",
                       style: TextStyle(
                         fontFamily: 'Lato',
                         fontSize: 14,

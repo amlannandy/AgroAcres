@@ -4,9 +4,10 @@ import '../../../models/CropField.dart';
 import '../screens/MyCropFieldScreen.dart';
 import '../../../services/CropFieldProvider.dart';
 
-Widget fieldCard(BuildContext context, CropField cropField) {
+Widget fieldCard(BuildContext context, CropField cropField, bool isEnglish) {
   return GestureDetector(
-    onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => MyCropFieldScreen(cropField.id))),
+    onTap: () => Navigator.of(context).push(
+        MaterialPageRoute(builder: (ctx) => MyCropFieldScreen(cropField.id))),
     child: Container(
       margin: const EdgeInsets.only(
         bottom: 10,
@@ -16,20 +17,19 @@ Widget fieldCard(BuildContext context, CropField cropField) {
         horizontal: 20,
       ),
       decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey[350],
-            blurRadius: 20.0,
-            spreadRadius: 0.02,
-          ),
-        ],
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        border: Border.all(
-          color: Colors.black.withOpacity(0.2),
-          width: 0.4,
-        )
-      ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey[350],
+              blurRadius: 20.0,
+              spreadRadius: 0.02,
+            ),
+          ],
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(
+            color: Colors.black.withOpacity(0.2),
+            width: 0.4,
+          )),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
@@ -63,8 +63,12 @@ Widget fieldCard(BuildContext context, CropField cropField) {
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              pocketData('Sowing Date', cropField.startTime),
-              pocketData('Harvest Date', CropFieldProvider.getFormattedDatePlusDays(cropField.startDate, cropField.harvestTime)),
+              pocketData(isEnglish ? 'Sowing Date' : 'बुवाई की तारीख',
+                  cropField.startTime),
+              pocketData(
+                  isEnglish ? 'Harvest Date' : 'फसल की तारीख',
+                  CropFieldProvider.getFormattedDatePlusDays(
+                      cropField.startDate, cropField.harvestTime)),
             ],
           ),
         ],

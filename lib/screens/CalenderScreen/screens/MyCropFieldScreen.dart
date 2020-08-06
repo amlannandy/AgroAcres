@@ -23,7 +23,9 @@ class MyCropFieldScreen extends StatelessWidget {
         Provider.of<LocalizationProvider>(context).getCurrentLanguage() == 'en';
 
     return Scaffold(
-      appBar: customAppBar(context, 'My Crop Field'),
+      appBar:
+          customAppBar(context, isEnglish ? 'My Crop Field' : 'मेरी फसल खेत'),
+      backgroundColor: Colors.white,
       body: Container(
         width: MediaQuery.of(context).size.width,
         child: StreamBuilder<CropField>(
@@ -42,17 +44,18 @@ class MyCropFieldScreen extends StatelessWidget {
                       imageUrl: cropField.imageUrl,
                       cropName: cropField.crop,
                       startDate: cropField.startTime,
+                      isEnglish: isEnglish,
                       endDate: CropFieldProvider.getFormattedDatePlusDays(
                           cropField.startDate, cropField.harvestTime),
                     ),
                     PrimaryButton(
-                        text: 'VIEW CALENDER',
+                        text: isEnglish ? 'VIEW CALENDER' : 'कैलेंडर देखें',
                         press: () => Navigator.of(context).pushNamed(
                             '/calender',
                             arguments: [cropField.crop, cropField.startDate]),
                         color: Colors.green[800]),
                     PrimaryButton(
-                        text: 'DELETE CROP FIELD',
+                        text: isEnglish ? 'DELETE CROP FIELD' : 'फसल हटाओ',
                         press: () =>
                             CropFieldProvider.deleteCropFieldConfirmation(
                                 context, fieldId, isEnglish),

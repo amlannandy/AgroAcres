@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../models/Calender.dart';
 import '../local_widgets/CustomAppBar.dart';
@@ -6,6 +7,7 @@ import '../../../widgets/LoadingSpinner.dart';
 import '../local_widgets/CalenderListItem.dart';
 import '../../../services/CropFieldProvider.dart';
 import '../../../services/UserDatabaseService.dart';
+import '../../../services/LocalizationProvider.dart';
 
 class CalenderScreen extends StatelessWidget {
   final UserDatabaseService userDatabaseService = UserDatabaseService();
@@ -15,9 +17,11 @@ class CalenderScreen extends StatelessWidget {
     final List cropData = ModalRoute.of(context).settings.arguments;
     final String cropName = cropData[0];
     final timestamp = cropData[1];
+    bool isEnglish =
+        Provider.of<LocalizationProvider>(context).getCurrentLanguage() == 'en';
 
     return Scaffold(
-      appBar: customAppBar(context, 'Timeline'),
+      appBar: customAppBar(context, isEnglish ? 'Timeline' : 'समय'),
       body: StreamBuilder<Calender>(
           stream: userDatabaseService.streamCalender(cropName),
           builder: (context, snapshot) {

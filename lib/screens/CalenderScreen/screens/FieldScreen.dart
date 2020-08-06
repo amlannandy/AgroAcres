@@ -3,12 +3,13 @@ import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../local_widgets/CustomAppBar.dart';
 import '../../../models/CropField.dart';
 import '../local_widgets/FieldCard.dart';
 import '../local_widgets/EmptyBanner.dart';
+import '../local_widgets/CustomAppBar.dart';
 import '../../../widgets/LoadingSpinner.dart';
 import '../../../services/UserDatabaseService.dart';
+import '../../../services/LocalizationProvider.dart';
 
 class FieldScreen extends StatelessWidget {
   final _db = Firestore.instance;
@@ -17,9 +18,12 @@ class FieldScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<FirebaseUser>(context);
+    bool isEnglish =
+        Provider.of<LocalizationProvider>(context).getCurrentLanguage() == 'en';
 
     return Scaffold(
-      appBar: customAppBar(context, 'Crop Calender'),
+      appBar:
+          customAppBar(context, isEnglish ? 'Crop Calender' : 'फसल कैलेंडर'),
       backgroundColor: Colors.white,
       body: user == null
           ? loadingSpinner()
@@ -41,7 +45,7 @@ class FieldScreen extends StatelessWidget {
                 return ListView.builder(
                   padding: const EdgeInsets.all(10),
                   itemBuilder: (ctx, index) =>
-                      fieldCard(context, fields[index]),
+                      fieldCard(context, fields[index], isEnglish),
                   itemCount: fields.length,
                 );
               }),

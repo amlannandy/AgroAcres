@@ -3,17 +3,16 @@ import 'package:flutter/material.dart';
 import '../../../services/CropFieldProvider.dart';
 
 class DateField extends StatefulWidget {
-
   final Function callback;
+  final bool isEnglish;
 
-  DateField(this.callback);
+  DateField(this.callback, this.isEnglish);
 
   @override
   _DateFieldState createState() => _DateFieldState();
 }
 
 class _DateFieldState extends State<DateField> {
-
   final _controller = TextEditingController();
 
   void setControllerValue(String value) {
@@ -26,13 +25,12 @@ class _DateFieldState extends State<DateField> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(
-          color: Colors.green[800],
-          width: 0.5,
-        ),
-        borderRadius: BorderRadius.circular(20.0),
-        color: Colors.white
-      ),
+          border: Border.all(
+            color: Colors.green[800],
+            width: 0.5,
+          ),
+          borderRadius: BorderRadius.circular(20.0),
+          color: Colors.white),
       margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
       child: Row(
         children: <Widget>[
@@ -53,15 +51,15 @@ class _DateFieldState extends State<DateField> {
             child: TextField(
               controller: _controller,
               onTap: () {
-                CropFieldProvider.showDateChooser(context, widget.callback, setControllerValue);
+                CropFieldProvider.showDateChooser(
+                    context, widget.callback, setControllerValue);
               },
               decoration: InputDecoration(
                 border: InputBorder.none,
-                hintText: 'Sowing/Land Preparation Date',
-                hintStyle: TextStyle(
-                  color: Colors.grey,
-                  fontFamily: 'Varela'
-                ),
+                hintText: widget.isEnglish
+                    ? 'Sowing/Land Preparation Date'
+                    : 'बुवाई की तारीख',
+                hintStyle: TextStyle(color: Colors.grey, fontFamily: 'Varela'),
               ),
             ),
           )

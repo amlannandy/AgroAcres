@@ -3,17 +3,16 @@ import 'package:flutter/material.dart';
 import '../../../services/CropFieldProvider.dart';
 
 class CropDropdownField extends StatefulWidget {
-
   final Function callback;
+  final bool isEnglish;
 
-  CropDropdownField(this.callback);
+  CropDropdownField(this.callback, this.isEnglish);
 
   @override
   _CropDropdownFieldState createState() => _CropDropdownFieldState();
 }
 
 class _CropDropdownFieldState extends State<CropDropdownField> {
-
   final _controller = TextEditingController();
 
   void setControllerValue(String value) {
@@ -27,13 +26,12 @@ class _CropDropdownFieldState extends State<CropDropdownField> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(
-          color: Colors.green[800],
-          width: 0.5,
-        ),
-        borderRadius: BorderRadius.circular(20.0),
-        color: Colors.white
-      ),
+          border: Border.all(
+            color: Colors.green[800],
+            width: 0.5,
+          ),
+          borderRadius: BorderRadius.circular(20.0),
+          color: Colors.white),
       margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
       child: Row(
         children: <Widget>[
@@ -59,11 +57,9 @@ class _CropDropdownFieldState extends State<CropDropdownField> {
               },
               decoration: InputDecoration(
                 border: InputBorder.none,
-                hintText: 'Select a Crop',
-                hintStyle: TextStyle(
-                  color: Colors.grey,
-                  fontFamily: 'Varela'
-                ),
+                hintText:
+                    widget.isEnglish ? 'Select a Crop' : 'एक फसल का चयन करें',
+                hintStyle: TextStyle(color: Colors.grey, fontFamily: 'Varela'),
               ),
             ),
           )

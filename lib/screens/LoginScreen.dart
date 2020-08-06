@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../services/FirebasePhoneAuth.dart';
 import '../widgets/CustomTextField.dart';
+import '../services/FirebasePhoneAuth.dart';
+import '../services/LocalizationProvider.dart';
 
 class LoginScreen extends StatefulWidget {
   static const routeName = '/login';
@@ -44,6 +46,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isEnglish =
+        Provider.of<LocalizationProvider>(context).getCurrentLanguage() == 'en';
+
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -67,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   if (snapshot.data == PhoneAuthState.Started)
                     return waitingBanner();
                   if (snapshot.data == PhoneAuthState.CodeSent)
-                    return otpField();
+                    return otpField(isEnglish);
                   if (snapshot.data == PhoneAuthState.Verified) {
                     new Future.delayed(Duration(milliseconds: 300), () {
                       Navigator.of(context).pushReplacementNamed('/init');
@@ -84,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         msg: "Validation failed",
                         backgroundColor: Colors.red,
                         textColor: Colors.white);
-                  return phoneNumberField();
+                  return phoneNumberField(isEnglish);
                 }),
             Container(
               alignment: Alignment.centerRight,
@@ -116,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget phoneNumberField() {
+  Widget phoneNumberField(bool isEnglish) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -126,7 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
             bottom: 5,
           ),
           child: Text(
-            "Sign in",
+            isEnglish ? "Sign in" : "साइन इन करें",
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'Lato',
@@ -141,7 +146,9 @@ class _LoginScreenState extends State<LoginScreen> {
             bottom: 5,
           ),
           child: Text(
-            "Using your phone number",
+            isEnglish
+                ? "Using your phone number"
+                : "अपने फ़ोन नंबर का उपयोग करना",
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'Lato',
@@ -153,14 +160,14 @@ class _LoginScreenState extends State<LoginScreen> {
         CustomTextField(
           controller: _phoneController,
           icon: Icons.phone,
-          labelText: "Your Phone Number",
+          labelText: isEnglish ? "Your Phone Number" : "आपका फोन नंबर",
           numeric: true,
         ),
       ],
     );
   }
 
-  Widget otpField() {
+  Widget otpField(bool isEnglish) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -170,7 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
             bottom: 5,
           ),
           child: Text(
-            "OTP Sent",
+            isEnglish ? "OTP Sent" : "ओटीपी भेजा गया",
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'Lato',
@@ -185,7 +192,9 @@ class _LoginScreenState extends State<LoginScreen> {
             bottom: 5,
           ),
           child: Text(
-            "Waiting for confirmation",
+            isEnglish
+                ? "Waiting for confirmation"
+                : "पुष्टि के लिए प्रतीक्षा कर रहा है",
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'Lato',
@@ -197,7 +206,7 @@ class _LoginScreenState extends State<LoginScreen> {
         CustomTextField(
           controller: _otpController,
           icon: Icons.phone_locked,
-          labelText: "Enter OTP",
+          labelText: isEnglish ? "Enter OTP" : "ओटीपी दर्ज करें",
           numeric: true,
         ),
       ],
