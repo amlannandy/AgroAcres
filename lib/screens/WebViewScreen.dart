@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 class WebViewScreen extends StatelessWidget {
-
   final String title;
   final String url;
 
@@ -18,11 +17,10 @@ class WebViewScreen extends StatelessWidget {
         title: Text(
           title,
           style: TextStyle(
-            fontFamily: 'Lato',
-            fontSize: 22,
-            color: Colors.black.withOpacity(0.8),
-            fontWeight: FontWeight.bold
-          ),
+              fontFamily: 'Lato',
+              fontSize: 22,
+              color: Colors.black.withOpacity(0.8),
+              fontWeight: FontWeight.bold),
         ),
         leading: IconButton(
           icon: Icon(
@@ -34,9 +32,7 @@ class WebViewScreen extends StatelessWidget {
       ),
       backgroundColor: Colors.white,
       body: Container(
-        margin: const EdgeInsets.only(
-          bottom: 10
-        ),
+        margin: const EdgeInsets.only(bottom: 10),
         child: WebviewScaffold(
           url: url,
         ),

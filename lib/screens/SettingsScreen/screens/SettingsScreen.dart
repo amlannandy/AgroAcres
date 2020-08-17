@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../local_widgets/WhiteAppBar.dart';
+import '../local_widgets/TutorialsList.dart';
 import '../../../services/LocalizationProvider.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -18,6 +19,9 @@ class SettingsScreen extends StatelessWidget {
         child: Column(
           children: <Widget>[
             languageSwitch(context, isEnglish),
+            Divider(color: Colors.grey, thickness: 0.4),
+            SizedBox(height: 5),
+            TutorialsList(isEnglish),
           ],
         ),
       ),
