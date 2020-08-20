@@ -15,6 +15,11 @@ const ENGLISH_URL =
 const HINDI_URL =
     'https://web-chat.global.assistant.watson.cloud.ibm.com/preview.html?region=eu-gb&integrationID=d90dc56f-613a-4ca3-a586-dfebb09341d5&serviceInstanceID=cd1938af-8ea5-4c50-a686-44c85b08756b';
 
+const CHATBOT_ENGLISH_URL =
+    'https://firebasestorage.googleapis.com/v0/b/agroacres-bbsr.appspot.com/o/videos%2FChatbot%20Final-1.m4v?alt=media&token=2e9c4fd4-b423-4a29-af3e-c444a499cdc7';
+const CHATBOT_HINDI_URL =
+    'https://firebasestorage.googleapis.com/v0/b/agroacres-bbsr.appspot.com/o/videos%2FChatbot%20Final-1.m4v?alt=media&token=2e9c4fd4-b423-4a29-af3e-c444a499cdc7';
+
 class MenuScreen extends StatelessWidget {
   final UserDatabaseService userDatabaseService = UserDatabaseService();
 
@@ -51,8 +56,10 @@ class MenuScreen extends StatelessWidget {
           menuItem(
             onPress: () => Navigator.of(context).push(MaterialPageRoute(
               builder: (ctx) => WebViewScreen(
-                  isEnglish ? 'Welcome' : 'स्वागत हे',
-                  isEnglish ? ENGLISH_URL : HINDI_URL),
+                isEnglish ? 'Welcome' : 'स्वागत हे',
+                isEnglish ? ENGLISH_URL : HINDI_URL,
+                isEnglish ? CHATBOT_ENGLISH_URL : CHATBOT_HINDI_URL,
+              ),
             )),
             title: isEnglish ? 'Chatbot' : 'बॉट चैट करें',
             icon: Icons.chat_bubble_outline,

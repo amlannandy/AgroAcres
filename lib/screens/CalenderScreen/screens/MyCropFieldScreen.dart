@@ -23,8 +23,8 @@ class MyCropFieldScreen extends StatelessWidget {
         Provider.of<LocalizationProvider>(context).getCurrentLanguage() == 'en';
 
     return Scaffold(
-      appBar:
-          customAppBar(context, isEnglish ? 'My Crop Field' : 'मेरी फसल खेत'),
+      appBar: customAppBar(
+          context, isEnglish ? 'My Crop Field' : 'मेरी फसल खेत', isEnglish),
       backgroundColor: Colors.white,
       body: Container(
         width: MediaQuery.of(context).size.width,

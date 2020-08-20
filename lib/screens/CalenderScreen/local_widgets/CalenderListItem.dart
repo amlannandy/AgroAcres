@@ -4,7 +4,12 @@ import 'package:line_icons/line_icons.dart';
 
 import '../../WebViewScreen.dart';
 
-Widget calenderListItem(BuildContext context, { String title, String subtitle, String date, String imageUrl, String link }) {
+Widget calenderListItem(BuildContext context,
+    {String title,
+    String subtitle,
+    String date,
+    String imageUrl,
+    String link}) {
   return Container(
     margin: const EdgeInsets.only(
       left: 10,
@@ -16,20 +21,19 @@ Widget calenderListItem(BuildContext context, { String title, String subtitle, S
       horizontal: 10,
     ),
     decoration: BoxDecoration(
-      boxShadow: [
-        BoxShadow(
-          color: Colors.grey[350],
-          blurRadius: 20.0,
-          spreadRadius: 0.02,
-        ),
-      ],
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(15),
-      border: Border.all(
-        color: Colors.black.withOpacity(0.2),
-        width: 0.4,
-      )
-    ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey[350],
+            blurRadius: 20.0,
+            spreadRadius: 0.02,
+          ),
+        ],
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(
+          color: Colors.black.withOpacity(0.2),
+          width: 0.4,
+        )),
     child: Column(
       children: <Widget>[
         ClipRRect(
@@ -83,7 +87,8 @@ Widget header(String title, String date) {
   );
 }
 
-Widget expandedContent(String title, String subtitle, String link, BuildContext context) {
+Widget expandedContent(
+    String title, String subtitle, String link, BuildContext context) {
   return Padding(
     padding: const EdgeInsets.only(
       left: 10,
@@ -104,7 +109,7 @@ Widget expandedContent(String title, String subtitle, String link, BuildContext 
         ),
         GestureDetector(
           onTap: () => Navigator.of(context).push(MaterialPageRoute(
-            builder: (ctx) => WebViewScreen(title, link),
+            builder: (ctx) => WebViewScreen(title, link, link),
           )),
           child: Padding(
             padding: const EdgeInsets.symmetric(

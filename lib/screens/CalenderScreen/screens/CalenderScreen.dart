@@ -21,7 +21,7 @@ class CalenderScreen extends StatelessWidget {
         Provider.of<LocalizationProvider>(context).getCurrentLanguage() == 'en';
 
     return Scaffold(
-      appBar: customAppBar(context, isEnglish ? 'Timeline' : 'समय'),
+      appBar: customAppBar(context, isEnglish ? 'Timeline' : 'समय', isEnglish),
       body: StreamBuilder<Calender>(
           stream: userDatabaseService.streamCalender(cropName),
           builder: (context, snapshot) {

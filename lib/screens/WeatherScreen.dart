@@ -2,9 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 
+import './VideoScreen.dart';
 import '../widgets/LoadingSpinner.dart';
 import '../services/WeatherProvider.dart';
 import '../services/LocalizationProvider.dart';
+
+const WEATHER_ENGLISH_URL =
+    'https://firebasestorage.googleapis.com/v0/b/agroacres-bbsr.appspot.com/o/videos%2FWeatherforecadt%20Final-4.m4v?alt=media&token=a9c76c66-d412-4429-a296-3cf388e69e8b';
+const WEATHER_HINDI_URL =
+    'https://firebasestorage.googleapis.com/v0/b/agroacres-bbsr.appspot.com/o/videos%2FWeatherforecadt%20Final-4.m4v?alt=media&token=a9c76c66-d412-4429-a296-3cf388e69e8b';
 
 class WeatherScreen extends StatefulWidget {
   @override
@@ -53,7 +59,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
         Provider.of<LocalizationProvider>(context).getCurrentLanguage() == 'en';
 
     return Scaffold(
-      appBar: appBar(context, isEnglish ? 'Weather' : 'मौसम'),
+      appBar: appBar(context, isEnglish),
       body: _isLoading
           ? loadingSpinner()
           : SingleChildScrollView(
@@ -89,20 +95,30 @@ class _WeatherScreenState extends State<WeatherScreen> {
     );
   }
 
-  Widget appBar(BuildContext context, String title) {
+  Widget appBar(BuildContext context, bool isEnglish) {
     return AppBar(
-      elevation: 0,
-      backgroundColor: Colors.white,
-      centerTitle: true,
-      title: locationRow(),
-      leading: IconButton(
-        icon: Icon(
-          Icons.arrow_back_ios,
-          color: Colors.black.withOpacity(0.8),
+        elevation: 0,
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        title: locationRow(),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black.withOpacity(0.8),
+          ),
+          onPressed: () => Navigator.of(context).pop(),
         ),
-        onPressed: () => Navigator.of(context).pop(),
-      ),
-    );
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.help,
+              color: Colors.black.withOpacity(0.8),
+            ),
+            onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (ctx) => VideoScreen(isEnglish ? 'Weather' : 'मौसम',
+                    isEnglish ? WEATHER_ENGLISH_URL : WEATHER_HINDI_URL))),
+          )
+        ]);
   }
 
   Widget locationRow() {

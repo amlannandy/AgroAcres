@@ -61,8 +61,8 @@ class _AddCropFieldScreenState extends State<AddCropFieldScreen> {
         Provider.of<LocalizationProvider>(context).getCurrentLanguage() == 'en';
 
     return Scaffold(
-      appBar: customAppBar(
-          context, isEnglish ? 'Add Crop Field' : 'फसल का खेत जोड़ें'),
+      appBar: customAppBar(context,
+          isEnglish ? 'Add Crop Field' : 'फसल का खेत जोड़ें', isEnglish),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(

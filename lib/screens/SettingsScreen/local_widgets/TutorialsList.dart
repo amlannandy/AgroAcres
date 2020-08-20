@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../../models/Tutorial.dart';
 import '../local_widgets/TutorialCard.dart';
-import '../../../widgets/LoadingSpinner.dart';
 
 class TutorialsList extends StatelessWidget {
   final bool isEnglish;
@@ -37,7 +36,6 @@ class TutorialsList extends StatelessWidget {
                   return Container();
                 }
                 final docs = snapshot.data.documents;
-                print(docs);
                 List<Tutorial> tutorials = [];
                 docs.forEach(
                     (doc) => tutorials.add(Tutorial.fromFirestore(doc)));

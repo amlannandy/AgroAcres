@@ -78,13 +78,18 @@ Widget tutorialCard(BuildContext context, Tutorial tutorial) {
                     fontSize: 20,
                   ),
                 ),
-                Text(
-                  tutorial.title,
-                  style: TextStyle(
-                    color: Colors.black.withOpacity(0.6),
-                    fontFamily: 'Varela',
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  child: Text(
+                    tutorial.subtitle,
+                    style: TextStyle(
+                      color: Colors.black.withOpacity(0.6),
+                      fontFamily: 'Varela',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 4,
                   ),
                 ),
               ],

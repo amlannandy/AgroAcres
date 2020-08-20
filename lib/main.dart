@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import './screens/InitScreen.dart';
 import './screens/LoginScreen.dart';
 import './screens/WeatherScreen.dart';
-import './screens/ChatbotScreen.dart';
 import './screens/UserInfoScreen.dart';
 import './screens/NavBarController.dart';
 import './screens/MyProductsScreen.dart';
@@ -53,7 +52,6 @@ class MyApp extends StatelessWidget {
           '/login': (ctx) => LoginScreen(),
           '/userinfo': (ctx) => UserInfoScreen(),
           '/navbarcontroller': (ctx) => NavBarController(),
-          '/chatbot': (ctx) => ChatbotScreen(),
           '/myproducts': (ctx) => MyProductsScreen(),
           '/addproduct': (ctx) => AddProductScreen(),
           '/weather': (ctx) => WeatherScreen(),

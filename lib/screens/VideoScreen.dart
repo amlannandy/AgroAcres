@@ -1,3 +1,4 @@
+import 'package:AgroAcres/widgets/LoadingSpinner.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -45,10 +46,10 @@ class _VideoScreenState extends State<VideoScreen> {
       body: Center(
         child: _controller.value.initialized
             ? AspectRatio(
-                aspectRatio: _controller.value.aspectRatio,
+                aspectRatio: 9 / 16,
                 child: VideoPlayer(_controller),
               )
-            : Container(),
+            : loadingSpinner(),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(

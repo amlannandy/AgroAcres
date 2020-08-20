@@ -22,8 +22,8 @@ class FieldScreen extends StatelessWidget {
         Provider.of<LocalizationProvider>(context).getCurrentLanguage() == 'en';
 
     return Scaffold(
-      appBar:
-          customAppBar(context, isEnglish ? 'Crop Calender' : 'फसल कैलेंडर'),
+      appBar: customAppBar(
+          context, isEnglish ? 'Crop Calender' : 'फसल कैलेंडर', isEnglish),
       backgroundColor: Colors.white,
       body: user == null
           ? loadingSpinner()
