@@ -2,10 +2,11 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../models/Crop.dart';
+import '../config.dart';
 
 class MandiProvider {
-
-  static final url = 'https://api.data.gov.in/resource/9ef84268-d588-465a-a308-a864a43d0070?api-key=579b464db66ec23bdd0000019b744bced621467059a863d32c0bfdf0&format=json&offset=0&limit=30';
+  static final url =
+      'https://api.data.gov.in/resource/9ef84268-d588-465a-a308-a864a43d0070?api-key=$API_KEY&format=json&offset=0&limit=30';
   static List<Crop> _crops = [];
 
   static Future<List<Crop>> fetchCropsData() async {
@@ -26,5 +27,4 @@ class MandiProvider {
   static List<Crop> getCrops() {
     return [..._crops];
   }
-
 }
