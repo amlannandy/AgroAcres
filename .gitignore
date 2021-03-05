@@ -40,5 +40,5 @@ lib/generated_plugin_registrant.dart
 /android/app/google-services.json
 /lib/config.dart
 
-/server/node_modules
+/server/venv
 /server/.env
