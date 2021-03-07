@@ -1,5 +1,5 @@
-import datetime
-from .app import db
+from datetime import datetime
+from app import db
 
 
 class Crop(db.Model):

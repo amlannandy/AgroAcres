@@ -42,6 +42,7 @@ lib/generated_plugin_registrant.dart
 
 /server/venv
 /server/.env
+/server/db.sqlite3
 __pycache__
 
 .vscode

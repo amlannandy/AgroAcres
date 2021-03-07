@@ -1,14 +1,19 @@
 import os
 from flask import Flask
+from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
+
+from routes import routes as RoutesBlueprint
 
 # Init db
 db = SQLAlchemy()
 
+# Load environment variables
+load_dotenv()
+
 app = Flask(__name__)
 
 # Import routes
-from .routes import routes as RoutesBlueprint
 
 app.register_blueprint(RoutesBlueprint)
 
