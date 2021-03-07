@@ -3,8 +3,6 @@ from flask import Flask
 from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 
-from routes import routes as RoutesBlueprint
-
 # Init db
 db = SQLAlchemy()
 
@@ -14,8 +12,9 @@ load_dotenv()
 app = Flask(__name__)
 
 # Import routes
+from server.routes.index import index as IndexBlueprint
 
-app.register_blueprint(RoutesBlueprint)
+app.register_blueprint(IndexBlueprint)
 
 # Setup and integrate db
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
