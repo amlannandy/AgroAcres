@@ -2,6 +2,9 @@
 
 AgroAcres is an app-based platform which promotes Smart Agriculture among Indian Farmers. It is a self-contained digital environment for Farmers to learn more about Farming, cultivate their crops in a better manner and even get fair prices for it once harvested. It tries to help them at every step of the Journey they have to undergo everytime they are planting a Crop.
 
+<p>Checkout the devpost page <a href='https://devpost.com/software/agroacres-getfrp'>here</a></p>
+<p>Checkout the demo video <a href='https://www.youtube.com/watch?v=qyQSTB-0iDI'>here</a></p>
+
 ## Problem Statement
 
 Suicide rates of farmers are increasing day by day. Main reason behind this being slow upgradation in the Agriculture Secture, and also
