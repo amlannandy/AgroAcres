@@ -14,7 +14,7 @@ lack of awareness among Farmers about Modern Agricultural Practices.
 
 1. Flutter - The skelton of the project. We're using Flutter to save development time while simultaneously building the App for both Android and iOS.
 2. Firebase - We use Firebase, a BaaS (Backend as a Service) as our backend as it provides many features such as Phone Authentication, Cloud Storage, no-SQL Database and Cloud Messaging out-of-the-box that we require in this project
-3. Natural Language Processing - The Chatbot in this project was creating entirely using IBM's Watson Assistant.
+3. Natural Language Processing - The Chatbot in this project was created entirely using IBM's Watson Assistant.
 
 ## Features
 
