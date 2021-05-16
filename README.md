@@ -56,3 +56,13 @@ Want us to guide you through every single stage of farming? Tell us what crop yo
   <img src="https://github.com/amlannandy/AgroAcres/blob/master/assets/screenshots/calender.jpg" width="150px" style="margin-right: 10px;" alt="">
   <img src="https://github.com/amlannandy/AgroAcres/blob/master/assets/screenshots/Calender2.jpg" width="150px" alt="">
 </div>
+
+## Multilingual Support
+
+The app can be used in its entire functionality in both English and Hindi languaes. During your first user, it lets you select your preferred language which can be changed anytime in the future in the Settings screen.
+
+<div style="flex-direction: row;">
+  <img src="https://github.com/amlannandy/AgroAcres/blob/master/assets/screenshots/LanguageChoice.jpg" width="150px" style="margin-right: 10px;" alt="">
+  <img src="https://github.com/amlannandy/AgroAcres/blob/master/assets/screenshots/HindiLogin.jpg" width="150px" style="margin-right: 10px;" alt="">
+  <img src="https://github.com/amlannandy/AgroAcres/blob/master/assets/screenshots/HindiCalender.jpg" width="150px" alt="">
+</div>
