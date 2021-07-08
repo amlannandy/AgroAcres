@@ -8,13 +8,23 @@ import 'package:geolocator/geolocator.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
-class UserInfoProvider {
+import '../config.dart';
 
+class UserInfoProvider {
   static File currentImage;
   static String currentImageUrl = "";
 
-  static void uploadUserInfo({BuildContext context, String name, String age, String location, String aadharNumber, Position userPosition}) async {
-    if (name.isEmpty || age.isEmpty || location.isEmpty || aadharNumber.isEmpty) {
+  static void uploadUserInfo(
+      {BuildContext context,
+      String name,
+      String age,
+      String location,
+      String aadharNumber,
+      Position userPosition}) async {
+    if (name.isEmpty ||
+        age.isEmpty ||
+        location.isEmpty ||
+        aadharNumber.isEmpty) {
       Fluttertoast.showToast(msg: "Please fill up all the fields");
       return;
     }
@@ -40,26 +50,28 @@ class UserInfoProvider {
     }
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
     Firestore.instance.collection('users').document(user.uid).setData({
-      'name' : name,
-      'age' : int.parse(age),
-      'phone' : user.phoneNumber,
-      'city' : location,
-      'imageUrl' : currentImageUrl.isEmpty ? "https://firebasestorage.googleapis.com/v0/b/agroacres-bbsr.appspot.com/o/user_profile_photos%2Fdefault.png?alt=media&token=bce57e61-72f5-4a9e-a211-c40523912169" : currentImageUrl,
-      'location' : GeoPoint(userPosition.latitude, userPosition.longitude),
-      'aadharNumber' : aadharNumber,
+      'name': name,
+      'age': int.parse(age),
+      'phone': user.phoneNumber,
+      'city': location,
+      'imageUrl': currentImageUrl.isEmpty ? STOCK_IMAGE_URL : currentImageUrl,
+      'location': GeoPoint(userPosition.latitude, userPosition.longitude),
+      'aadharNumber': aadharNumber,
     });
     Navigator.of(context).pushReplacementNamed('/init');
   }
 
-  static Future takePicture(BuildContext context, Function notifyChanges) async {
+  static Future takePicture(
+      BuildContext context, Function notifyChanges) async {
     final imageFile = await ImagePicker.pickImage(
       source: ImageSource.camera,
       maxWidth: 600,
     );
-    if (imageFile == null)
-      return;
+    if (imageFile == null) return;
     currentImage = imageFile;
-    StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('doctorProfilePictures/${Path.basename(currentImage.path)}}');
+    StorageReference firebaseStorageRef = FirebaseStorage.instance
+        .ref()
+        .child('doctorProfilePictures/${Path.basename(currentImage.path)}}');
     StorageUploadTask uploadTask = firebaseStorageRef.putFile(currentImage);
     await uploadTask.onComplete;
     firebaseStorageRef.getDownloadURL().then((fileUrl) {
@@ -68,15 +80,17 @@ class UserInfoProvider {
     });
   }
 
-  static Future uploadPicture(BuildContext context, Function notifyChanges) async {
+  static Future uploadPicture(
+      BuildContext context, Function notifyChanges) async {
     final imageFile = await ImagePicker.pickImage(
       source: ImageSource.gallery,
       maxWidth: 600,
     );
-    if (imageFile == null)
-      return;
+    if (imageFile == null) return;
     currentImage = imageFile;
-    StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('doctorProfilePictures/${Path.basename(currentImage.path)}}');
+    StorageReference firebaseStorageRef = FirebaseStorage.instance
+        .ref()
+        .child('doctorProfilePictures/${Path.basename(currentImage.path)}}');
     StorageUploadTask uploadTask = firebaseStorageRef.putFile(currentImage);
     await uploadTask.onComplete;
     firebaseStorageRef.getDownloadURL().then((fileUrl) {
@@ -89,5 +103,4 @@ class UserInfoProvider {
     await FirebaseAuth.instance.signOut();
     Navigator.of(context).pushReplacementNamed('/init');
   }
-
 }

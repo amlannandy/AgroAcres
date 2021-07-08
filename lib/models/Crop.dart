@@ -30,7 +30,7 @@ class Crop {
       modalPrice: crop['modal_price'],
       state: crop['state'],
       district: crop['district'],
-      arrivalDate: crop['arrival_date'] ?? '10/10/10',
+      arrivalDate: crop['arrival_date'] ?? '10/10/20',
     );
   }
 }

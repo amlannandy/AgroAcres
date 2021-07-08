@@ -1,8 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Calender {
-
   final int harvestTime;
   final List timestamps;
   final List titles;
@@ -31,5 +30,4 @@ class Calender {
     );
     return calender;
   }
-
 }

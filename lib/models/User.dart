@@ -1,8 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../config.dart';
 
 class User {
-
   final String userId;
   final String name;
   final int age;
@@ -27,8 +28,7 @@ class User {
 
   factory User.fromFirestore(DocumentSnapshot snapshot) {
     Map data = snapshot.data;
-    if (data == null)
-      return null;
+    if (data == null) return null;
     User user = User(
       userId: snapshot.documentID,
       name: data['name'] ?? null,
@@ -36,14 +36,14 @@ class User {
       phone: data['phone'] ?? null,
       city: data['city'] ?? null,
       aadharNo: data['aadharNumber'] ?? null,
-      imageUrl: data['imageUrl'] ?? "https://firebasestorage.googleapis.com/v0/b/agroacres-bbsr.appspot.com/o/user_profile_photos%2Fdefault.png?alt=media&token=bce57e61-72f5-4a9e-a211-c40523912169",
+      imageUrl: data['imageUrl'] ?? STOCK_IMAGE_URL,
       location: Position(
-        latitude: data['location'].latitude,
-        longitude: data['location'].longitude,
-      ) ?? null,
+            latitude: data['location'].latitude,
+            longitude: data['location'].longitude,
+          ) ??
+          null,
       fieldId: data['fieldId'] ?? null,
     );
     return user;
   }
-
 }
