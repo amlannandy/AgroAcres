@@ -14,7 +14,7 @@ lack of awareness among Farmers about Modern Agricultural Practices.
 
 1. Flutter - The skelton of the project. We're using Flutter to save development time while simultaneously building the App for both Android and iOS.
 2. Firebase - We use Firebase, a BaaS (Backend as a Service) as our backend as it provides many features such as Phone Authentication, Cloud Storage, no-SQL Database and Cloud Messaging out-of-the-box that we require in this project
-3. Natural Language Processing - The Chatbot in this project was creating entirely using IBM's Watson Assistant.
+3. Natural Language Processing - The Chatbot in this project was created entirely using IBM's Watson Assistant.
 
 ## Features
 
@@ -55,4 +55,14 @@ Want us to guide you through every single stage of farming? Tell us what crop yo
   <img src="https://github.com/amlannandy/AgroAcres/blob/master/assets/screenshots/calender1.jpg" width="150px" style="margin-right: 10px;" alt="">
   <img src="https://github.com/amlannandy/AgroAcres/blob/master/assets/screenshots/calender.jpg" width="150px" style="margin-right: 10px;" alt="">
   <img src="https://github.com/amlannandy/AgroAcres/blob/master/assets/screenshots/Calender2.jpg" width="150px" alt="">
+</div>
+
+## Multilingual Support
+
+The app can be used in its entire functionality in both English and Hindi languaes. During your first user, it lets you select your preferred language which can be changed anytime in the future in the Settings screen.
+
+<div style="flex-direction: row;">
+  <img src="https://github.com/amlannandy/AgroAcres/blob/master/assets/screenshots/LanguageChoice.jpg" width="150px" style="margin-right: 10px;" alt="">
+  <img src="https://github.com/amlannandy/AgroAcres/blob/master/assets/screenshots/HindiLogin.jpg" width="150px" style="margin-right: 10px;" alt="">
+  <img src="https://github.com/amlannandy/AgroAcres/blob/master/assets/screenshots/HindiCalender.jpg" width="150px" alt="">
 </div>
