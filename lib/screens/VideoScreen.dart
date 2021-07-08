@@ -1,7 +1,7 @@
-import 'package:AgroAcres/widgets/LoadingSpinner.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
+import '../widgets/LoadingSpinner.dart';
 import './SettingsScreen/local_widgets/WhiteAppBar.dart';
 
 class VideoScreen extends StatefulWidget {

@@ -26,7 +26,7 @@ class _UnitsDropdownFieldState extends State<UnitsDropdownField> {
   static showUnitListDropdown(BuildContext context, Function selectValues) {
     showDialog(
       context: context,
-      child: UnitList(selectValues),
+      builder: (context) => UnitList(selectValues),
     );
   }
 

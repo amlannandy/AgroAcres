@@ -41,7 +41,7 @@ class CropFieldProvider {
   static showCropDropdown(BuildContext context, Function selectValues) {
     showDialog(
       context: context,
-      child: CropDropdownList(selectValues),
+      builder: (context) => CropDropdownList(selectValues),
     );
   }
 

@@ -86,48 +86,48 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
 
   showUploadDialog(BuildContext context, bool isEnglish) {
     showDialog(
-        context: context,
-        child: AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25),
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(25),
+        ),
+        titlePadding: const EdgeInsets.all(20),
+        title: Text(
+          isEnglish ? "Upload Picture" : "तसवीर डालें",
+          style: TextStyle(
+            fontFamily: 'Lato',
+            fontSize: 22,
+            color: Colors.green[800],
+            fontWeight: FontWeight.bold,
           ),
-          titlePadding: const EdgeInsets.all(20),
-          title: Text(
-            isEnglish ? "Upload Picture" : "तसवीर डालें",
-            style: TextStyle(
-              fontFamily: 'Lato',
-              fontSize: 22,
-              color: Colors.green[800],
-              fontWeight: FontWeight.bold,
+        ),
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: LightIconButton(
+              icon: Icons.camera_alt,
+              text: isEnglish ? "Camera" : "कैमरा",
+              function: () {
+                UserInfoProvider.takePicture(context, () => {setState(() {})});
+                Navigator.of(context).pop();
+              },
             ),
           ),
-          actions: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: LightIconButton(
-                icon: Icons.camera_alt,
-                text: isEnglish ? "Camera" : "कैमरा",
-                function: () {
-                  UserInfoProvider.takePicture(
-                      context, () => {setState(() {})});
-                  Navigator.of(context).pop();
-                },
-              ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: LightIconButton(
+              icon: Icons.filter,
+              text: isEnglish ? "Gallery" : "गेलरी",
+              function: () {
+                UserInfoProvider.uploadPicture(
+                    context, () => {setState(() {})});
+                Navigator.of(context).pop();
+              },
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: LightIconButton(
-                icon: Icons.filter,
-                text: isEnglish ? "Gallery" : "गेलरी",
-                function: () {
-                  UserInfoProvider.uploadPicture(
-                      context, () => {setState(() {})});
-                  Navigator.of(context).pop();
-                },
-              ),
-            ),
-          ],
-        ));
+          ),
+        ],
+      ),
+    );
   }
 
   Widget pictureContainer(BuildContext context, bool isEnglish) {

@@ -1,5 +1,5 @@
-name: AgroAcres
-description: A new Flutter project.
+name: agroacres
+description: An app-based smart agriculture platform
 version: 1.0.0+1
 
 environment:
