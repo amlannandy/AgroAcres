@@ -1,7 +1,11 @@
+import os
 import requests
+from dotenv import load_dotenv
 from bs4 import BeautifulSoup
 
-URL = 'https://agriplus.in/prices/paddy-dhan-common/odisha'
+load_dotenv()
+
+URL = os.getenv('MANDI_URL')
 
 page = requests.get(URL)
 soup = BeautifulSoup(page.content, 'html.parser')
