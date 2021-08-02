@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 
 from server.app import db
 from server.models.Crop import Crop
+from server.models.Record import Record
 
 load_dotenv()
 
@@ -42,6 +43,8 @@ def extract_crops_data():
         max_price=max_price,
       )
       db.session.add(crop)
+    record = Record(len(tags))
+    db.session.add(record)
     db.session.commit()
   except Exception as err:
     print(err)
