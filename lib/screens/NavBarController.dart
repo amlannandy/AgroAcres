@@ -5,7 +5,7 @@ import 'package:line_icons/line_icons.dart';
 
 import './MenuScreen.dart';
 import './HomeScreen.dart';
-import './MandiScreen.dart';
+import 'MandiScreen/MandiScreen.dart';
 import '../services/LocalizationProvider.dart';
 
 class NavBarController extends StatefulWidget {

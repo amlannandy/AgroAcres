@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../models/Crop.dart';
-import '../screens/CalenderScreen/local_widgets/FieldDetails.dart';
+import '../../../models/Crop.dart';
+import '../../CalenderScreen/local_widgets/FieldDetails.dart';
 
 class CropCard extends StatelessWidget {
   final Crop crop;
@@ -41,9 +41,14 @@ class CropCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                pocketContainer(isEnglish ? 'District' : 'जिला', crop.district),
                 pocketContainer(
-                    isEnglish ? 'Arrival' : 'पहुचना', crop.arrivalDate),
+                  isEnglish ? 'District' : 'जिला',
+                  crop.location,
+                ),
+                pocketContainer(
+                  isEnglish ? 'Arrival' : 'पहुचना',
+                  crop.updatedOn,
+                ),
               ],
             ),
             Row(

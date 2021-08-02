@@ -2,35 +2,32 @@ import 'package:flutter/material.dart';
 
 class Crop {
   final String name;
-  final String variety;
+  final String location;
+  final String quantity;
+  final String modalPrice;
   final String minPrice;
   final String maxPrice;
-  final String modalPrice;
-  final String state;
-  final String district;
-  final String arrivalDate;
+  final String updatedOn;
 
   Crop({
     @required this.name,
-    @required this.variety,
+    @required this.location,
+    @required this.quantity,
+    @required this.modalPrice,
     @required this.minPrice,
     @required this.maxPrice,
-    @required this.modalPrice,
-    @required this.state,
-    @required this.district,
-    @required this.arrivalDate,
+    @required this.updatedOn,
   });
 
-  factory Crop.fromJson(Map crop) {
+  factory Crop.fromJson(Map json) {
     return Crop(
-      name: crop['commodity'],
-      variety: crop['variety'],
-      minPrice: crop['min_price'],
-      maxPrice: crop['max_price'],
-      modalPrice: crop['modal_price'],
-      state: crop['state'],
-      district: crop['district'],
-      arrivalDate: crop['arrival_date'] ?? '10/10/20',
+      name: json['name'],
+      location: json['location'],
+      quantity: json['quantity'],
+      modalPrice: json['modal_price'],
+      minPrice: json['min_price'],
+      maxPrice: json['max_price'],
+      updatedOn: json['last_update'],
     );
   }
 }

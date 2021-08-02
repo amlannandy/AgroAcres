@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../config.dart';
-import './VideoScreen.dart';
-import '../models/Crop.dart';
-import '../widgets/CropCard.dart';
-import '../services/MandiProvider.dart';
-import '../widgets/LoadingSpinner.dart';
-import '../services/LocalizationProvider.dart';
+import '../../config.dart';
+import '../VideoScreen.dart';
+import '../../models/Crop.dart';
+import './local_widgets/CropCard.dart';
+import '../../services/MandiProvider.dart';
+import '../../widgets/LoadingSpinner.dart';
+import '../../services/LocalizationProvider.dart';
 
 class MandiScreen extends StatefulWidget {
   @override
