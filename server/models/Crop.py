@@ -4,7 +4,7 @@ from server.app import db
 
 class Crop(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False, unique=True)
+    name = db.Column(db.String(100), nullable=False)
     location = db.Column(db.String(100), nullable=False)
     quantity = db.Column(db.String(20), nullable=False)
     modal_price = db.Column(db.String(20), nullable=False)

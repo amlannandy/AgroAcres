@@ -1,6 +1,8 @@
 from flask import Blueprint, jsonify
+
 from server.models.Crop import Crop
 from server.models.Record import Record
+from server.scrapper import extract_crops_data
 
 index = Blueprint('', __name__)
 
@@ -14,7 +16,8 @@ def get_crop_prices():
             'msg': 'Crops fetched successfully!',
         }
         return jsonify(response), 200
-    except:
+    except Exception as err:
+        print(err)
         response = {
             'success': False,
             'msg': 'Something went wrong!',
@@ -32,6 +35,23 @@ def get_all_records():
         }
         return jsonify(response), 200
     except:
+        response = {
+            'success': False,
+            'msg': 'Something went wrong!',
+        }
+        return jsonify(response), 500
+
+@index.route('/extract')
+def extract_crops():
+    try:
+        extract_crops_data()
+        response = {
+            'success': True,
+            'msg': 'Data extracted',
+        }
+        return jsonify(response), 200
+    except Exception as err:
+        print(err)
         response = {
             'success': False,
             'msg': 'Something went wrong!',
