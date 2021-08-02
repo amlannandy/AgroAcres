@@ -9,26 +9,22 @@ URL = os.getenv('MANDI_URL')
 
 page = requests.get(URL)
 soup = BeautifulSoup(page.content, 'html.parser')
-body = soup.find(name='tbody')
-tags = body.findAll(name='tr')
+body = soup.find(name='body')
+tags = body.find_all('div', {'class': 'mob_p_12'})
 
 for t in tags:
-  info = t.findAll(name='td')
-  for i in info:
-    print(i.text)
-  print('\n\n')
+  # Get crop name directly
+  crop_name = t.find_next('div', {'class': 'mob_p_02'}).text.split(':')[0].strip()
 
-# def extract_articles():
-#   articles = []
-#   for a in articleTags:
-#     titleTag = a.find('h1', class_='entry-title')
-#     title = titleTag.text
-#     url = titleTag.find('a')['href']
-#     content = a.find('p').text.split('… Continue reading')[0]
-#     article = {
-#       'title': title,
-#       'content': content,
-#       'url': url,
-#     }
-#     articles.append(article)
-#   return articles
+  # Location, quantity and modal price
+  crop_deails = t.find_all_next('div', {'class': 'mob_p_06'})
+  location = str(crop_deails[0].text).split(':')[1].strip()
+  quantity = str(crop_deails[1].text).split(':')[1].strip()
+  modal_price = str(crop_deails[2].text).split(':')[1].strip()
+
+  # Min and max price
+  min_max_price = t.find_next('div', { 'class': 'mob_p_09'}).text
+  min_price = min_max_price.split('/')[0][1:].strip()
+  max_price = min_max_price.split('/')[1].strip()
+
+  print(crop_name, location, quantity, modal_price, min_price, max_price)
