@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify
 
+from server.app import scheduler
 from server.models.Crop import Crop
 from server.models.Record import Record
 from server.scrapper import extract_crops_data
@@ -57,3 +58,11 @@ def extract_crops():
             'msg': 'Something went wrong!',
         }
         return jsonify(response), 500
+
+@scheduler.task('interval', id='do_job_1', seconds=86400, misfire_grace_time=900)
+def extract_crops_automatically():
+    try:
+        extract_crops_data()
+        print('Crops data extracted')
+    except Exception as err:
+        print(err)
