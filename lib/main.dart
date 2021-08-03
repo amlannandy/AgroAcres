@@ -25,7 +25,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         StreamProvider<FirebaseUser>.value(
-            value: FirebaseAuth.instance.onAuthStateChanged),
+          value: FirebaseAuth.instance.onAuthStateChanged,
+        ),
         ChangeNotifierProvider.value(value: LocalizationProvider()),
         ChangeNotifierProvider.value(value: WeatherProvider()),
       ],
@@ -36,10 +37,11 @@ class MyApp extends StatelessWidget {
           accentColor: Colors.green[600],
           textTheme: TextTheme(
             headline6: TextStyle(
-                fontFamily: 'Lato',
-                fontSize: 22,
-                color: Colors.white,
-                fontWeight: FontWeight.bold),
+              fontFamily: 'Lato',
+              fontSize: 22,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
             bodyText2: TextStyle(
               fontFamily: 'Varela',
               fontSize: 14,
