@@ -1,3 +1,4 @@
+import 'package:agro_acres/routing/Application.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,8 +9,6 @@ import '../services/LocalizationProvider.dart';
 import '../services/UserDatabaseService.dart';
 
 class InitScreen extends StatefulWidget {
-  static const routeName = '/init';
-
   @override
   _InitScreenState createState() => _InitScreenState();
 }
@@ -25,11 +24,12 @@ class _InitScreenState extends State<InitScreen> {
       String lang = sharedPreferences.getString('lang');
       if (lang == null) {
         _redirect = true;
-        _redirectURL = "/setlanguage";
+        _redirectURL = "/set-language";
         return true;
       }
+      bool isEnglish = lang == 'en';
       await Provider.of<LocalizationProvider>(context, listen: false)
-          .switchLanguage(lang == 'en');
+          .switchLanguage(isEnglish);
       FirebaseUser currentUser = await FirebaseAuth.instance.currentUser();
       if (currentUser == null) {
         _redirect = true;
@@ -43,11 +43,10 @@ class _InitScreenState extends State<InitScreen> {
         _redirectURL = "/userinfo";
         return true;
       }
-      _redirectURL = "/navbarcontroller";
+      _redirectURL = "/home";
       _redirect = true;
       return true;
     } catch (err) {
-      print(err);
       return false;
     }
   }
@@ -56,58 +55,63 @@ class _InitScreenState extends State<InitScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Theme.of(context).primaryColor,
-                Theme.of(context).accentColor,
-              ],
-              begin: Alignment.bottomCenter,
-              end: Alignment.topRight,
-            ),
-          ),
-          width: double.infinity,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              //Image.asset(TO ADD LOGO HERE),
-              FutureBuilder<bool>(
-                future: _checkAuthStatus(context),
-                builder: (BuildContext c, AsyncSnapshot<bool> snapshot) {
-                  List<Widget> children = [];
-                  if (snapshot.hasData && snapshot.data) {
-                    print("InitState Returned: ${snapshot.data}");
-                    new Future.delayed(Duration(milliseconds: 500), () {
-                      print("Redirect: $_redirect $_redirectURL  |");
-                      if (_redirect)
-                        Navigator.of(context)
-                            .pushReplacementNamed(_redirectURL);
-                    });
-                    return Container();
-                  } else if (snapshot.hasError) {
-                    print(snapshot.error);
-                    Text(
-                      "Authentication Error",
-                      style: TextStyle(
-                        fontFamily: 'Varela',
-                        fontSize: 28,
-                        fontWeight: FontWeight.w300,
-                        color: Colors.white,
-                      ),
-                    );
-                  }
-                  return Column(
-                    children: children,
-                  );
-                },
-              ),
-              CircularProgressIndicator(
-                backgroundColor: Colors.white,
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.green[800]),
-              ),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Theme.of(context).primaryColor,
+              Theme.of(context).accentColor,
             ],
-          )),
+            begin: Alignment.bottomCenter,
+            end: Alignment.topRight,
+          ),
+        ),
+        width: double.infinity,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            //Image.asset(TO ADD LOGO HERE),
+            FutureBuilder<bool>(
+              future: _checkAuthStatus(context),
+              builder: (BuildContext c, AsyncSnapshot<bool> snapshot) {
+                List<Widget> children = [];
+                if (snapshot.hasData && snapshot.data) {
+                  print("InitState Returned: ${snapshot.data}");
+                  new Future.delayed(Duration(milliseconds: 500), () {
+                    print("Redirect: $_redirect $_redirectURL  |");
+                    if (_redirect) {
+                      Application.router.navigateTo(
+                        context,
+                        _redirectURL,
+                        replace: true,
+                      );
+                    }
+                  });
+                  return Container();
+                } else if (snapshot.hasError) {
+                  print(snapshot.error);
+                  Text(
+                    "Authentication Error",
+                    style: TextStyle(
+                      fontFamily: 'Varela',
+                      fontSize: 28,
+                      fontWeight: FontWeight.w300,
+                      color: Colors.white,
+                    ),
+                  );
+                }
+                return Column(
+                  children: children,
+                );
+              },
+            ),
+            CircularProgressIndicator(
+              backgroundColor: Colors.white,
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.green[800]),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

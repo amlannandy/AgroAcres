@@ -25,4 +25,6 @@ class LocalizationProvider with ChangeNotifier {
   String getCurrentLanguage() {
     return _currentLanguage;
   }
+
+  bool get isEnglish => _currentLanguage == 'en';
 }

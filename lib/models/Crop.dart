@@ -22,12 +22,12 @@ class Crop {
   factory Crop.fromJson(Map json) {
     return Crop(
       name: json['name'],
-      location: json['location'],
-      quantity: json['quantity'],
+      location: json['location'] ?? 'Unknown',
+      quantity: json['quantity'] ?? 'Unknown',
       modalPrice: json['modal_price'],
       minPrice: json['min_price'],
       maxPrice: json['max_price'],
-      updatedOn: json['last_update'],
+      updatedOn: json['last_updated'],
     );
   }
 }

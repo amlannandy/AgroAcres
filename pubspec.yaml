@@ -13,6 +13,7 @@ dependencies:
   expandable: ^4.1.4
   firebase_auth: ^0.15.5+3
   firebase_storage: ^3.1.5
+  fluro: ^2.0.3
   fluttertoast: ^4.0.1
   flutter_webview_plugin: ^0.3.11
   font_awesome_flutter: ^8.7.0

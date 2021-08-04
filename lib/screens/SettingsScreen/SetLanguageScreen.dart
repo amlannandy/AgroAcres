@@ -1,14 +1,15 @@
+import 'package:agro_acres/routing/Application.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../widgets/PrimaryButton.dart';
-import '../../../services/LocalizationProvider.dart';
+import '../../widgets/PrimaryButton.dart';
+import '../../services/LocalizationProvider.dart';
 
 class SetLanguageScreen extends StatelessWidget {
   void chooseLanguage(BuildContext context, bool isEnglish) async {
     await Provider.of<LocalizationProvider>(context, listen: false)
         .switchLanguage(isEnglish);
-    Navigator.of(context).pushReplacementNamed('/init');
+    Application.router.navigateTo(context, '/', replace: true);
   }
 
   @override

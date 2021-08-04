@@ -1,75 +1,106 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:line_icons/line_icons.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
-import '../config.dart';
-import './VideoScreen.dart';
-import '../screens/ProductsListScreen.dart';
+import './MenuScreen.dart';
+import './ProductsScreen.dart';
+import './MandiScreen/MandiScreen.dart';
+import './MandiScreen/state/MandiBloc.dart';
 import '../services/LocalizationProvider.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _selectedIndex = 0;
+  final _pageController = PageController(initialPage: 0);
+
+  Map<String, Widget> _pages = {
+    "Market": ProductsScreen(),
+    "Mandi": Provider<MandiBloc>(
+      create: (context) => MandiBloc(),
+      dispose: (context, bloc) => bloc.dispose(),
+      child: MandiScreen(),
+    ),
+    "Menu": MenuScreen(),
+  };
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     bool isEnglish =
         Provider.of<LocalizationProvider>(context).getCurrentLanguage() == 'en';
 
-    return Container(
-      height: MediaQuery.of(context).size.height,
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [
-        Theme.of(context).primaryColor,
-        Theme.of(context).accentColor,
-      ])),
-      child: Column(
-        children: <Widget>[
-          SizedBox(height: MediaQuery.of(context).size.height * 0.06),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            child: header(context, isEnglish),
-          ),
-          Container(
-              height: MediaQuery.of(context).size.height * 0.79,
-              padding: const EdgeInsets.only(
-                top: 5,
-              ),
-              child: ProductsListScreen(false)),
-        ],
+    return Scaffold(
+      body: PageView(
+        onPageChanged: (index) => setState(() => _selectedIndex = index),
+        controller: _pageController,
+        children: _pages.values.toList(),
       ),
+      bottomNavigationBar: navBar(context, isEnglish),
     );
   }
 
-  Widget header(BuildContext context, bool isEnglish) {
+  Widget navBar(BuildContext context, bool isEnglish) {
     return Container(
-      alignment: Alignment.center,
-      width: MediaQuery.of(context).size.width * 0.8,
-      padding: const EdgeInsets.symmetric(horizontal: 25),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Text(isEnglish ? 'Shop' : 'दुकान',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Lato',
-                fontSize: isEnglish ? 20 : 24,
-              )),
-          IconButton(
-            icon: Icon(
-              Icons.help,
-              color: Colors.white,
-            ),
-            onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (ctx) => VideoScreen(
-                  isEnglish ? 'Shop' : 'दुकान',
-                  isEnglish
-                      ? TUTORIAL_URL_MANDI_ENGLISH
-                      : TUTORIAL_URL_HOME_HINDI,
+      decoration: BoxDecoration(color: Colors.white, boxShadow: [
+        BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1))
+      ]),
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+          child: GNav(
+              gap: 5,
+              activeColor: Colors.white,
+              iconSize: 24,
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              duration: Duration(milliseconds: 800),
+              tabBackgroundColor: Theme.of(context).primaryColor,
+              tabs: [
+                GButton(
+                  icon: LineIcons.balance_scale,
+                  text: isEnglish ? 'Market' : 'बाजार',
+                  iconColor: Theme.of(context).primaryColor,
+                  onPressed: (index) {
+                    setState(() => _selectedIndex = index);
+                  },
                 ),
-              ),
-            ),
-          )
-        ],
+                GButton(
+                  icon: LineIcons.map,
+                  text: isEnglish ? 'Mandi' : 'मंडी',
+                  iconColor: Theme.of(context).primaryColor,
+                  onPressed: (index) {
+                    setState(() => _selectedIndex = index);
+                  },
+                ),
+                GButton(
+                  icon: LineIcons.bars,
+                  text: isEnglish ? 'Menu' : 'मेन्यू',
+                  iconColor: Theme.of(context).primaryColor,
+                  onPressed: (index) {
+                    setState(() => _selectedIndex = index);
+                  },
+                ),
+              ],
+              selectedIndex: _selectedIndex,
+              onTabChange: (index) {
+                _pageController.animateToPage(
+                  index,
+                  duration: Duration(milliseconds: 400),
+                  curve: Curves.ease,
+                );
+                setState(() {
+                  _selectedIndex = index;
+                });
+              }),
+        ),
       ),
     );
   }

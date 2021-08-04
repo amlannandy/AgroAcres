@@ -1,16 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
-import '../local_widgets/WhiteAppBar.dart';
-import '../local_widgets/TutorialsList.dart';
-import '../../../services/LocalizationProvider.dart';
+import './local_widgets/WhiteAppBar.dart';
+import './local_widgets/TutorialsList.dart';
+import '../../services/LocalizationProvider.dart';
 
 class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    bool isEnglish =
-        Provider.of<LocalizationProvider>(context).getCurrentLanguage() == 'en';
+    bool isEnglish = Provider.of<LocalizationProvider>(context).isEnglish;
 
     return Scaffold(
       appBar: appBar(context, isEnglish ? 'Settings' : 'समायोजन'),
