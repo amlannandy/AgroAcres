@@ -1,3 +1,4 @@
+import 'package:agro_acres/routing/Application.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -75,7 +76,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     return otpField(isEnglish);
                   if (snapshot.data == PhoneAuthState.Verified) {
                     new Future.delayed(Duration(milliseconds: 300), () {
-                      Navigator.of(context).pushReplacementNamed('/init');
+                      Application.router
+                          .navigateTo(context, '/', replace: true);
                     });
                     return successBanner();
                   }

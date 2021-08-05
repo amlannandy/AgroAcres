@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../screens/AddProductScreen.dart';
-import '../screens/ProductsListScreen.dart';
-import '../services/LocalizationProvider.dart';
+import 'AddProductScreen.dart';
+import 'local_widgets/ProductsList.dart';
+import '../../services/LocalizationProvider.dart';
 
 class MyProductsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    bool isEnglish =
-        Provider.of<LocalizationProvider>(context).getCurrentLanguage() == 'en';
+    bool isEnglish = Provider.of<LocalizationProvider>(context).isEnglish;
 
     return Scaffold(
       appBar: appBar(
@@ -17,7 +16,7 @@ class MyProductsScreen extends StatelessWidget {
         isEnglish ? 'My Products' : 'मेरे उत्पाद',
       ),
       backgroundColor: Theme.of(context).primaryColor,
-      body: ProductsListScreen(true),
+      body: ProductsList(userOnly: true),
     );
   }
 
@@ -29,10 +28,11 @@ class MyProductsScreen extends StatelessWidget {
       title: Text(
         title,
         style: TextStyle(
-            fontFamily: 'Lato',
-            fontSize: 22,
-            color: Colors.black.withOpacity(0.8),
-            fontWeight: FontWeight.bold),
+          fontFamily: 'Lato',
+          fontSize: 22,
+          color: Colors.black.withOpacity(0.8),
+          fontWeight: FontWeight.bold,
+        ),
       ),
       leading: IconButton(
         icon: Icon(

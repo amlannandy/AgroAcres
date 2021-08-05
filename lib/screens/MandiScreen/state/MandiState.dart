@@ -13,5 +13,7 @@ class MandiState {
     this.isLoading = false;
   }
 
-  MandiState.onError(this.error);
+  MandiState.onError(this.error) {
+    this.isLoading = false;
+  }
 }

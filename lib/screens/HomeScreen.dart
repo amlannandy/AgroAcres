@@ -4,10 +4,11 @@ import 'package:line_icons/line_icons.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 import './MenuScreen.dart';
-import './ProductsScreen.dart';
 import './MandiScreen/MandiScreen.dart';
 import './MandiScreen/state/MandiBloc.dart';
+import './ProductsScreen/ProductsScreen.dart';
 import '../services/LocalizationProvider.dart';
+import './ProductsScreen/state/ProductsBloc.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -19,7 +20,11 @@ class _HomeScreenState extends State<HomeScreen> {
   final _pageController = PageController(initialPage: 0);
 
   Map<String, Widget> _pages = {
-    "Market": ProductsScreen(),
+    "Market": Provider<ProductsBloc>(
+      create: (context) => ProductsBloc(),
+      dispose: (context, blog) => blog.dispose(),
+      child: ProductsScreen(),
+    ),
     "Mandi": Provider<MandiBloc>(
       create: (context) => MandiBloc(),
       dispose: (context, bloc) => bloc.dispose(),
@@ -35,8 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    bool isEnglish =
-        Provider.of<LocalizationProvider>(context).getCurrentLanguage() == 'en';
+    bool isEnglish = Provider.of<LocalizationProvider>(context).isEnglish;
 
     return Scaffold(
       body: PageView(
@@ -57,49 +61,50 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
           child: GNav(
-              gap: 5,
-              activeColor: Colors.white,
-              iconSize: 24,
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-              duration: Duration(milliseconds: 800),
-              tabBackgroundColor: Theme.of(context).primaryColor,
-              tabs: [
-                GButton(
-                  icon: LineIcons.balance_scale,
-                  text: isEnglish ? 'Market' : 'बाजार',
-                  iconColor: Theme.of(context).primaryColor,
-                  onPressed: (index) {
-                    setState(() => _selectedIndex = index);
-                  },
-                ),
-                GButton(
-                  icon: LineIcons.map,
-                  text: isEnglish ? 'Mandi' : 'मंडी',
-                  iconColor: Theme.of(context).primaryColor,
-                  onPressed: (index) {
-                    setState(() => _selectedIndex = index);
-                  },
-                ),
-                GButton(
-                  icon: LineIcons.bars,
-                  text: isEnglish ? 'Menu' : 'मेन्यू',
-                  iconColor: Theme.of(context).primaryColor,
-                  onPressed: (index) {
-                    setState(() => _selectedIndex = index);
-                  },
-                ),
-              ],
-              selectedIndex: _selectedIndex,
-              onTabChange: (index) {
-                _pageController.animateToPage(
-                  index,
-                  duration: Duration(milliseconds: 400),
-                  curve: Curves.ease,
-                );
-                setState(() {
-                  _selectedIndex = index;
-                });
-              }),
+            gap: 5,
+            activeColor: Colors.white,
+            iconSize: 24,
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+            duration: Duration(milliseconds: 800),
+            tabBackgroundColor: Theme.of(context).primaryColor,
+            tabs: [
+              GButton(
+                icon: LineIcons.balance_scale,
+                text: isEnglish ? 'Market' : 'बाजार',
+                iconColor: Theme.of(context).primaryColor,
+                onPressed: (index) {
+                  setState(() => _selectedIndex = index);
+                },
+              ),
+              GButton(
+                icon: LineIcons.map,
+                text: isEnglish ? 'Mandi' : 'मंडी',
+                iconColor: Theme.of(context).primaryColor,
+                onPressed: (index) {
+                  setState(() => _selectedIndex = index);
+                },
+              ),
+              GButton(
+                icon: LineIcons.bars,
+                text: isEnglish ? 'Menu' : 'मेन्यू',
+                iconColor: Theme.of(context).primaryColor,
+                onPressed: (index) {
+                  setState(() => _selectedIndex = index);
+                },
+              ),
+            ],
+            selectedIndex: _selectedIndex,
+            onTabChange: (index) {
+              _pageController.animateToPage(
+                index,
+                duration: Duration(milliseconds: 400),
+                curve: Curves.ease,
+              );
+              setState(() {
+                _selectedIndex = index;
+              });
+            },
+          ),
         ),
       ),
     );

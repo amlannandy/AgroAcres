@@ -1,35 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../models/Product.dart';
-import '../widgets/ProductCard.dart';
-import '../widgets/LoadingSpinner.dart';
-import '../services/LocalizationProvider.dart';
+import '../state/ProductsBloc.dart';
+import '../state/ProductsState.dart';
+import 'ProductCard.dart';
+import '../../../widgets/LoadingSpinner.dart';
+import '../../../services/LocalizationProvider.dart';
 
-class ProductsListScreen extends StatelessWidget {
-  final bool updating;
+class ProductsList extends StatelessWidget {
+  final bool userOnly;
 
-  ProductsListScreen(this.updating);
-
-  final _db = Firestore.instance;
+  ProductsList({this.userOnly = false});
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<FirebaseUser>(context);
-    bool isEnglish =
-        Provider.of<LocalizationProvider>(context).getCurrentLanguage() == 'en';
+    bool isEnglish = Provider.of<LocalizationProvider>(context).isEnglish;
 
-    return user == null
+    return (userOnly && user == null)
         ? loadingSpinner()
-        : StreamBuilder<QuerySnapshot>(
-            stream: updating
-                ? _db
-                    .collection('products')
-                    .where('userId', isEqualTo: user.uid)
-                    .snapshots()
-                : _db.collection('products').snapshots(),
+        : StreamBuilder<ProductsState>(
+            initialData: ProductsState.onRequest(),
+            stream: Provider.of<ProductsBloc>(context).state,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return loadingSpinner();
@@ -37,13 +30,15 @@ class ProductsListScreen extends StatelessWidget {
               if (!snapshot.hasData) {
                 return Container();
               }
-              final docs = snapshot.data.documents;
-              final List<Product> products = [];
-              docs.forEach((doc) => products.add(Product.fromFirestore(doc)));
+              final state = snapshot.data;
+              if (state.isLoading) {
+                return loadingSpinner();
+              }
+              final products = state.products;
               if (products.isEmpty) {
                 return Center(
                   child: Text(
-                    updating
+                    userOnly
                         ? (isEnglish
                             ? 'Add a Product Now!'
                             : 'अब एक उत्पाद जोड़ें')
@@ -60,10 +55,14 @@ class ProductsListScreen extends StatelessWidget {
               }
               return ListView.builder(
                 padding: const EdgeInsets.all(0),
-                itemBuilder: (ctx, index) =>
-                    ProductCard(products[index], isEnglish, updating: updating),
+                itemBuilder: (ctx, index) => ProductCard(
+                  products[index],
+                  isEnglish,
+                  userOnly: userOnly,
+                ),
                 itemCount: products.length,
               );
-            });
+            },
+          );
   }
 }

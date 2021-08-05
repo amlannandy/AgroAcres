@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../models/Product.dart';
-import '../services/ShopProvider.dart';
-import '../screens/AddProductScreen.dart';
-import '../widgets/CustomYellowButton.dart';
+import '../../../models/Product.dart';
+import '../../../services/ShopProvider.dart';
+import '../AddProductScreen.dart';
+import '../../../widgets/CustomYellowButton.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
-  final bool updating;
+  final bool userOnly;
   final bool isEnglish;
 
-  ProductCard(this.product, this.isEnglish, {this.updating = false});
+  ProductCard(this.product, this.isEnglish, {this.userOnly = false});
 
   @override
   Widget build(BuildContext context) {
@@ -56,16 +56,14 @@ class ProductCard extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         smallPocketContainer(
-                            FontAwesomeIcons.rupeeSign,
-                            product.price.toStringAsFixed(0) +
-                                ' / ' +
-                                product.quanityName),
+                          FontAwesomeIcons.rupeeSign,
+                          "${product.price.toStringAsFixed(0)} / ${product.quanityName}",
+                        ),
                         SizedBox(width: 5),
                         smallPocketContainer(
-                            FontAwesomeIcons.list,
-                            product.quantity.toString() +
-                                ' ' +
-                                product.quanityName),
+                          FontAwesomeIcons.list,
+                          "${product.quantity.toString()} ${product.quanityName}",
+                        ),
                       ],
                     ),
                   ],
@@ -74,7 +72,7 @@ class ProductCard extends StatelessWidget {
             ],
           ),
           SizedBox(height: 10),
-          updating
+          userOnly
               ? editButtonsRow(context, product, isEnglish)
               : viewButtonsRow(context, product, isEnglish),
         ],

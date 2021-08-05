@@ -1,20 +1,20 @@
 import 'dart:io';
-import 'package:provider/provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:path/path.dart' as Path;
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:path/path.dart' as Path;
+import 'package:geolocator/geolocator.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../models/Product.dart';
-import '../widgets/ImageInput.dart';
-import '../services/ShopProvider.dart';
-import '../widgets/CustomDarkButton.dart';
-import '../widgets/CustomTextField.dart';
-import '../widgets/Locationinput.dart';
-import '../services/LocalizationProvider.dart';
-import '../screens/SettingsScreen/local_widgets/UnitsDropdownField.dart';
+import '../../models/Product.dart';
+import '../../widgets/ImageInput.dart';
+import '../../services/ShopProvider.dart';
+import '../../widgets/CustomDarkButton.dart';
+import '../../widgets/CustomTextField.dart';
+import '../../widgets/Locationinput.dart';
+import '../../services/LocalizationProvider.dart';
+import '../SettingsScreen/local_widgets/UnitsDropdownField.dart';
 
 class AddProductScreen extends StatefulWidget {
   final String productId;

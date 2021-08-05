@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../config.dart';
-import './VideoScreen.dart';
-import '../screens/ProductsListScreen.dart';
-import '../services/LocalizationProvider.dart';
+import '../../config.dart';
+import '../VideoScreen.dart';
+import 'local_widgets/ProductsList.dart';
+import '../../services/LocalizationProvider.dart';
 
 class ProductsScreen extends StatelessWidget {
   @override
@@ -28,11 +28,12 @@ class ProductsScreen extends StatelessWidget {
             child: header(context, isEnglish),
           ),
           Container(
-              height: MediaQuery.of(context).size.height * 0.79,
-              padding: const EdgeInsets.only(
-                top: 5,
-              ),
-              child: ProductsListScreen(false)),
+            height: MediaQuery.of(context).size.height * 0.79,
+            padding: const EdgeInsets.only(
+              top: 5,
+            ),
+            child: ProductsList(),
+          ),
         ],
       ),
     );
