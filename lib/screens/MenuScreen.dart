@@ -35,7 +35,10 @@ class MenuScreen extends StatelessWidget {
         children: <Widget>[
           userInfo(user),
           menuItem(
-            onPress: () => Navigator.of(context).pushNamed('/myproducts'),
+            onPress: user == null
+                ? null
+                : () => Application.router
+                    .navigateTo(context, '/my-products/${user.uid}'),
             title: isEnglish ? 'My Products' : 'मेरे उत्पाद',
             icon: Icons.storage,
           ),

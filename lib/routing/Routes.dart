@@ -8,6 +8,7 @@ class Routes {
   static const login = '/login';
   static const setLanguage = '/set-language';
   static const weather = '/weather';
+  static const myProducts = '/my-products/:userId';
 
   static void configureRouter(FluroRouter router) {
     router.define(
@@ -33,6 +34,11 @@ class Routes {
     router.define(
       weather,
       handler: weatherHandler,
+      transitionType: TransitionType.native,
+    );
+    router.define(
+      myProducts,
+      handler: myProductsHandler,
       transitionType: TransitionType.native,
     );
   }
