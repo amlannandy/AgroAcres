@@ -9,8 +9,7 @@ import '../../services/LocalizationProvider.dart';
 class ProductsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    bool isEnglish =
-        Provider.of<LocalizationProvider>(context).getCurrentLanguage() == 'en';
+    bool isEnglish = Provider.of<LocalizationProvider>(context).isEnglish;
 
     return Container(
       height: MediaQuery.of(context).size.height,

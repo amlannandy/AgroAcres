@@ -1,3 +1,4 @@
+import 'package:agro_acres/routing/Application.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -27,8 +28,7 @@ class MenuScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<FirebaseUser>(context);
-    bool isEnglish =
-        Provider.of<LocalizationProvider>(context).getCurrentLanguage() == 'en';
+    bool isEnglish = Provider.of<LocalizationProvider>(context).isEnglish;
 
     return SingleChildScrollView(
       child: Column(
@@ -58,7 +58,7 @@ class MenuScreen extends StatelessWidget {
             icon: Icons.chat_bubble_outline,
           ),
           menuItem(
-            onPress: () => Navigator.of(context).pushNamed('/weather'),
+            onPress: () => Application.router.navigateTo(context, '/weather'),
             title: isEnglish ? 'Weather Forecast' : 'मौसम पूर्वानुमान',
             icon: Icons.cloud,
           ),

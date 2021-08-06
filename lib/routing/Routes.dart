@@ -7,6 +7,7 @@ class Routes {
   static const home = '/home';
   static const login = '/login';
   static const setLanguage = '/set-language';
+  static const weather = '/weather';
 
   static void configureRouter(FluroRouter router) {
     router.define(
@@ -27,6 +28,11 @@ class Routes {
     router.define(
       setLanguage,
       handler: setLanguageHandler,
+      transitionType: TransitionType.native,
+    );
+    router.define(
+      weather,
+      handler: weatherHandler,
       transitionType: TransitionType.native,
     );
   }
