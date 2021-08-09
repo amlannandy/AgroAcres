@@ -7,9 +7,15 @@ import '../widgets/LightIconButton.dart';
 class ImageInput extends StatefulWidget {
   final Function selectImage;
   final String imageUrl;
+  final File imageFile;
   final bool isEnglish;
 
-  ImageInput(this.selectImage, {this.imageUrl, this.isEnglish = true});
+  ImageInput(
+    this.selectImage, {
+    this.imageUrl,
+    this.imageFile,
+    this.isEnglish = true,
+  });
 
   @override
   _ImageInputState createState() => _ImageInputState();
@@ -17,6 +23,14 @@ class ImageInput extends StatefulWidget {
 
 class _ImageInputState extends State<ImageInput> {
   File _storedImage;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.imageFile != null) {
+      setState(() => _storedImage = widget.imageFile);
+    }
+  }
 
   Future _takePicture() async {
     final imageFile = await ImagePicker.pickImage(
@@ -57,9 +71,10 @@ class _ImageInputState extends State<ImageInput> {
           Text(
             widget.isEnglish ? "Add an Image" : "एक छवि जोड़ें",
             style: TextStyle(
-                fontFamily: 'Lato',
-                fontSize: 18,
-                color: Colors.black.withOpacity(0.6)),
+              fontFamily: 'Lato',
+              fontSize: 18,
+              color: Colors.black.withOpacity(0.6),
+            ),
           ),
           SizedBox(height: 10),
           Row(
@@ -78,7 +93,7 @@ class _ImageInputState extends State<ImageInput> {
                   width: 1,
                   color: Colors.grey,
                 )),
-                child: (widget.imageUrl.isNotEmpty && _storedImage == null)
+                child: (widget.imageUrl != null && _storedImage == null)
                     ? Image.network(
                         widget.imageUrl,
                         fit: BoxFit.cover,

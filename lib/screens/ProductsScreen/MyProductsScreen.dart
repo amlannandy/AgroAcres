@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'AddProductScreen.dart';
+import './state/ProductsBloc.dart';
+import '../../routing/Application.dart';
 import 'local_widgets/ProductsList.dart';
 import '../../services/LocalizationProvider.dart';
 
@@ -37,9 +38,11 @@ class MyProductsScreen extends StatelessWidget {
               Icons.add_circle,
               color: Colors.black.withOpacity(0.8),
             ),
-            onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-              builder: (ctx) => AddProductScreen(),
-            )),
+            onPressed: () => Application.router
+                .navigateTo(context, '/add-product')
+                .whenComplete(() {
+              Provider.of<ProductsBloc>(context, listen: false).refresh();
+            }),
           )
         ],
       ),

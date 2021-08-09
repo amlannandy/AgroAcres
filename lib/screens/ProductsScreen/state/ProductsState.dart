@@ -1,7 +1,8 @@
-import 'package:agro_acres/models/Product.dart';
+import '../../../models/Product.dart';
 
 class ProductsState {
   List<Product> products;
+  Product currentProduct;
   bool isLoading = false;
   String error;
 
@@ -14,6 +15,10 @@ class ProductsState {
   }
 
   ProductsState.onError(this.error) {
+    this.isLoading = false;
+  }
+
+  ProductsState.onProductSuccess() {
     this.isLoading = false;
   }
 }

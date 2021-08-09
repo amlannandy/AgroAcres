@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../local_widgets/UnitsList.dart';
+import 'UnitsList.dart';
 
 class UnitsDropdownField extends StatefulWidget {
   final Function callback;
   final String label;
+  final String defaultValue;
 
-  UnitsDropdownField(this.callback, this.label);
+  UnitsDropdownField(this.callback, this.label, {this.defaultValue});
 
   @override
   _UnitsDropdownFieldState createState() => _UnitsDropdownFieldState();
@@ -15,6 +16,14 @@ class UnitsDropdownField extends StatefulWidget {
 
 class _UnitsDropdownFieldState extends State<UnitsDropdownField> {
   final _controller = TextEditingController();
+
+  @override
+  void initState() {
+    if (widget.defaultValue != null) {
+      setState(() => _controller.text = widget.defaultValue);
+    }
+    super.initState();
+  }
 
   void setControllerValue(String value) {
     setState(() {

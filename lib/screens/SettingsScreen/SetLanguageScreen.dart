@@ -1,7 +1,7 @@
-import 'package:agro_acres/routing/Application.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../routing/Application.dart';
 import '../../widgets/PrimaryButton.dart';
 import '../../services/LocalizationProvider.dart';
 

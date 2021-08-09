@@ -1,9 +1,9 @@
-import 'package:agro_acres/routing/Application.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../routing/Application.dart';
 import '../widgets/CustomTextField.dart';
 import '../services/FirebasePhoneAuth.dart';
 import '../services/LocalizationProvider.dart';

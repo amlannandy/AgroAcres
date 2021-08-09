@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../state/ProductsBloc.dart';
 import '../../../models/Product.dart';
+import '../../../routing/Application.dart';
 import '../../../services/ShopProvider.dart';
-import '../AddProductScreen.dart';
 import '../../../widgets/CustomYellowButton.dart';
 
 class ProductCard extends StatelessWidget {
@@ -192,9 +194,11 @@ Widget editButtonsRow(BuildContext context, Product product, bool isEnglish) {
         CustomYellowButton(
           text: isEnglish ? 'Edit' : 'संपादित करें',
           icon: FontAwesomeIcons.edit,
-          onPress: () => Navigator.of(context).push(MaterialPageRoute(
-            builder: (ctx) => AddProductScreen(productId: product.id),
-          )),
+          onPress: () => Application.router
+              .navigateTo(context, '/edit-product/${product.id}')
+              .whenComplete(() {
+            Provider.of<ProductsBloc>(context, listen: false).refresh();
+          }),
         ),
         CustomYellowButton(
           text: isEnglish ? 'Delete' : 'मिटाओ',

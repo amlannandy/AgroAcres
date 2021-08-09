@@ -1,90 +1,108 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:path/path.dart' as Path;
 import 'package:geolocator/geolocator.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../models/Product.dart';
+import './state/ProductsBloc.dart';
+import './state/ProductsState.dart';
 import '../../widgets/ImageInput.dart';
-import '../../services/ShopProvider.dart';
-import '../../widgets/CustomDarkButton.dart';
-import '../../widgets/CustomTextField.dart';
+import '../../routing/Application.dart';
 import '../../widgets/Locationinput.dart';
+import '../../widgets/LoadingSpinner.dart';
+import '../../widgets/CustomTextField.dart';
+import '../../widgets/CustomDarkButton.dart';
 import '../../services/LocalizationProvider.dart';
-import '../SettingsScreen/local_widgets/UnitsDropdownField.dart';
+import 'local_widgets/UnitsDropdownField.dart';
 
 class AddProductScreen extends StatefulWidget {
   final String productId;
+  final bool isEditing;
 
-  const AddProductScreen({this.productId});
+  const AddProductScreen({
+    this.productId,
+    this.isEditing = false,
+  });
 
   @override
   _AddProductScreenState createState() => _AddProductScreenState();
 }
 
 class _AddProductScreenState extends State<AddProductScreen> {
-  final _db = Firestore.instance;
-
   final _titleController = TextEditingController();
   final _priceController = TextEditingController();
   final _quantityController = TextEditingController();
   final _quantityNameController = TextEditingController();
 
+  File _imageFile;
+  String _imageUrl;
   Position _position;
-  File imageFile;
-  String imageUrl = "";
 
   @override
   void initState() {
-    if (widget.productId != null) {
-      fetchExistingValues();
+    if (widget.isEditing) {
+      Provider.of<ProductsBloc>(context, listen: false)
+          .fetchProduct(widget.productId, _setProductForEdit);
     }
     super.initState();
   }
 
-  void setUnitName(String crop) {
+  void _setUnitName(String crop) {
     _quantityNameController.text = crop;
   }
 
-  void selectPlace(double lat, double long) {
+  void _selectPlace(double lat, double long) {
     _position = Position(latitude: lat, longitude: long);
   }
 
-  void selectImage(File image) async {
-    setState(() {
-      imageFile = image;
-    });
-    StorageReference firebaseStorageRef = FirebaseStorage.instance
-        .ref()
-        .child('products/${Path.basename(image.path)}}');
-    StorageUploadTask uploadTask = firebaseStorageRef.putFile(imageFile);
-    await uploadTask.onComplete;
-    firebaseStorageRef.getDownloadURL().then((fileUrl) {
-      imageUrl = fileUrl;
-    });
+  void _selectImage(File image) async {
+    setState(() => _imageFile = image);
   }
 
-  void fetchExistingValues() async {
-    DocumentSnapshot doc =
-        await _db.collection('products').document(widget.productId).get();
-    Product product = Product.fromFirestore(doc);
+  void _setProductForEdit(Product product) {
     setState(() {
       _titleController.text = product.title;
       _priceController.text = product.price.toString();
       _quantityController.text = product.quantity.toString();
       _quantityNameController.text = product.quanityName;
-      imageUrl = product.imageUrl;
+      _imageUrl = product.imageUrl;
       _position = product.position;
     });
   }
 
+  void _goBack() {
+    Application.router.pop(context, true);
+  }
+
+  void _addProduct() {
+    Product product = Product(
+      title: _titleController.text,
+      price: double.parse(_priceController.text),
+      quantity: int.parse(_quantityController.text),
+      quanityName: _quantityNameController.text,
+      position: _position,
+    );
+    Provider.of<ProductsBloc>(context, listen: false)
+        .addProduct(product, _imageFile, _goBack);
+  }
+
+  void _updateProduct() {
+    Product product = Product(
+      title: _titleController.text,
+      price: double.parse(_priceController.text),
+      quantity: int.parse(_quantityController.text),
+      quanityName: _quantityNameController.text,
+      position: _position,
+      imageUrl: _imageUrl,
+    );
+    Provider.of<ProductsBloc>(context, listen: false)
+        .updateProduct(widget.productId, product, _imageFile, _goBack);
+  }
+
   @override
   Widget build(BuildContext context) {
-    bool isEnglish =
-        Provider.of<LocalizationProvider>(context).getCurrentLanguage() == 'en';
+    bool isEnglish = Provider.of<LocalizationProvider>(context).isEnglish;
 
     return Scaffold(
       appBar: appBar(
@@ -94,66 +112,59 @@ class _AddProductScreenState extends State<AddProductScreen> {
             : (isEnglish ? 'Edit Product' : 'उत्पाद संपादित करें'),
       ),
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            SizedBox(height: 20),
-            CustomTextField(
-              controller: _titleController,
-              icon: FontAwesomeIcons.boxTissue,
-              labelText: isEnglish ? 'Name of Product' : 'उत्पाद का नाम',
+      body: StreamBuilder<ProductsState>(
+        stream: Provider.of<ProductsBloc>(context).state,
+        builder: (context, snapshot) {
+          if (snapshot.hasData && snapshot.data.isLoading) {
+            return Center(child: loadingSpinner());
+          }
+          return SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                SizedBox(height: 20),
+                CustomTextField(
+                  controller: _titleController,
+                  icon: FontAwesomeIcons.boxTissue,
+                  labelText: isEnglish ? 'Name of Product' : 'उत्पाद का नाम',
+                ),
+                ImageInput(
+                  _selectImage,
+                  imageUrl: _imageUrl,
+                  imageFile: _imageFile,
+                  isEnglish: isEnglish,
+                ),
+                LocationInput(
+                  _selectPlace,
+                  position: _position,
+                  isEnglish: isEnglish,
+                ),
+                CustomTextField(
+                  controller: _priceController,
+                  icon: FontAwesomeIcons.rupeeSign,
+                  labelText: isEnglish ? 'Price per Item' : 'मूल्य प्रति आइटम',
+                  numeric: true,
+                ),
+                CustomTextField(
+                  controller: _quantityController,
+                  icon: FontAwesomeIcons.sortNumericUp,
+                  labelText: isEnglish ? 'Quantity' : 'मात्रा',
+                  numeric: true,
+                ),
+                UnitsDropdownField(
+                  _setUnitName,
+                  isEnglish ? 'Unit of Quantity' : 'मात्रा की इकाई',
+                  defaultValue: _quantityNameController.text,
+                ),
+                SizedBox(height: 20),
+                customDarkButton(
+                  text: isEnglish ? 'CONFIRM' : 'पुष्टि करें',
+                  icon: FontAwesomeIcons.checkCircle,
+                  onPress: widget.isEditing ? _updateProduct : _addProduct,
+                ),
+              ],
             ),
-            ImageInput(
-              selectImage,
-              imageUrl: imageUrl,
-              isEnglish: isEnglish,
-            ),
-            LocationInput(
-              selectPlace,
-              position: _position,
-              isEnglish: isEnglish,
-            ),
-            CustomTextField(
-              controller: _priceController,
-              icon: FontAwesomeIcons.rupeeSign,
-              labelText: isEnglish ? 'Price per Item' : 'मूल्य प्रति आइटम',
-              numeric: true,
-            ),
-            CustomTextField(
-              controller: _quantityController,
-              icon: FontAwesomeIcons.sortNumericUp,
-              labelText: isEnglish ? 'Quantity' : 'मात्रा',
-              numeric: true,
-            ),
-            UnitsDropdownField(
-                setUnitName, isEnglish ? 'Unit of Quantity' : 'मात्रा की इकाई'),
-            SizedBox(height: 20),
-            customDarkButton(
-              text: isEnglish ? 'CONFIRM' : 'पुष्टि करें',
-              icon: FontAwesomeIcons.checkCircle,
-              onPress: widget.productId == null
-                  ? () => ShopProvider.addProduct(
-                        context,
-                        title: _titleController.text,
-                        price: _priceController.text,
-                        quantity: _quantityController.text,
-                        quantityName: _quantityNameController.text,
-                        imageUrl: imageUrl,
-                        position: _position,
-                      )
-                  : () => ShopProvider.editProduct(
-                        context,
-                        widget.productId,
-                        title: _titleController.text,
-                        price: _priceController.text,
-                        quantity: _quantityController.text,
-                        quantityName: _quantityNameController.text,
-                        imageUrl: imageUrl,
-                        position: _position,
-                      ),
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
