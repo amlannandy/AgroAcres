@@ -11,6 +11,7 @@ class Routes {
   static const myProducts = '/my-products/:userId';
   static const addProduct = '/add-product';
   static const editProduct = '/edit-product/:productId';
+  static const settings = '/settings/:language';
 
   static void configureRouter(FluroRouter router) {
     router.define(
@@ -51,6 +52,11 @@ class Routes {
     router.define(
       editProduct,
       handler: editProductHandler,
+      transitionType: TransitionType.native,
+    );
+    router.define(
+      settings,
+      handler: settingsHandler,
       transitionType: TransitionType.native,
     );
   }

@@ -17,8 +17,7 @@ class CalenderScreen extends StatelessWidget {
     final List cropData = ModalRoute.of(context).settings.arguments;
     final String cropName = cropData[0];
     final timestamp = cropData[1];
-    bool isEnglish =
-        Provider.of<LocalizationProvider>(context).getCurrentLanguage() == 'en';
+    bool isEnglish = Provider.of<LocalizationProvider>(context).isEnglish;
 
     return Scaffold(
       appBar: customAppBar(context, isEnglish ? 'Timeline' : 'समय', isEnglish),

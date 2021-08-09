@@ -6,11 +6,13 @@ import '../screens/InitScreen.dart';
 import '../screens/HomeScreen.dart';
 import '../screens/LoginScreen.dart';
 import '../screens/WeatherScreen/WeatherScreen.dart';
+import '../screens/SettingsScreen/SettingsScreen.dart';
 import '../screens/ProductsScreen/AddProductScreen.dart';
 import '../screens/ProductsScreen/MyProductsScreen.dart';
 import '../screens/WeatherScreen/state/WeatherBloc.dart';
 import '../screens/SettingsScreen/SetLanguageScreen.dart';
 import '../screens/ProductsScreen/state/ProductsBloc.dart';
+import '../screens/SettingsScreen/state/TutorialBloc.dart';
 
 var initHandler = Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
@@ -70,6 +72,17 @@ var editProductHandler = Handler(
         productId: params['productId'].first,
         isEditing: true,
       ),
+    );
+  },
+);
+
+var settingsHandler = Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    bool isEnglish = params['language'].first == 'en';
+    return Provider<TutorialBloc>(
+      create: (context) => TutorialBloc(isEnglish),
+      dispose: (context, bloc) => bloc.dispose(),
+      child: SettingsScreen(),
     );
   },
 );

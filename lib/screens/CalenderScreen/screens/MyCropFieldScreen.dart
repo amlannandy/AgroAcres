@@ -19,8 +19,7 @@ class MyCropFieldScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isEnglish =
-        Provider.of<LocalizationProvider>(context).getCurrentLanguage() == 'en';
+    bool isEnglish = Provider.of<LocalizationProvider>(context).isEnglish;
 
     return Scaffold(
       appBar: customAppBar(

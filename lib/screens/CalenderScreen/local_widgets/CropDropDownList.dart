@@ -20,8 +20,7 @@ class _CropDropdownListState extends State<CropDropdownList> {
 
   @override
   Widget build(BuildContext context) {
-    bool isEnglish =
-        Provider.of<LocalizationProvider>(context).getCurrentLanguage() == 'en';
+    bool isEnglish = Provider.of<LocalizationProvider>(context).isEnglish;
 
     return Scaffold(
       backgroundColor: Colors.transparent,

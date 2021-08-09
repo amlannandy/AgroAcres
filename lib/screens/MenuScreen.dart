@@ -29,6 +29,8 @@ class MenuScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<FirebaseUser>(context);
     bool isEnglish = Provider.of<LocalizationProvider>(context).isEnglish;
+    String language =
+        Provider.of<LocalizationProvider>(context).currentLanguage;
 
     return SingleChildScrollView(
       child: Column(
@@ -66,7 +68,8 @@ class MenuScreen extends StatelessWidget {
             icon: Icons.cloud,
           ),
           menuItem(
-            onPress: () => Navigator.of(context).pushNamed('/settings'),
+            onPress: () =>
+                Application.router.navigateTo(context, '/settings/$language'),
             title: isEnglish ? 'Settings' : 'समायोजन',
             icon: Icons.settings,
           ),

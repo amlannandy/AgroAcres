@@ -25,8 +25,7 @@ class _UnitListState extends State<UnitList> {
 
   @override
   Widget build(BuildContext context) {
-    bool isEnglish =
-        Provider.of<LocalizationProvider>(context).getCurrentLanguage() == 'en';
+    bool isEnglish = Provider.of<LocalizationProvider>(context).isEnglish;
     if (!isEnglish) _unitList = _hindiUnitList;
 
     return Scaffold(

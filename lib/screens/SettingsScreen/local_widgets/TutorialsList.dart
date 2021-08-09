@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
 
-import '../../../models/Tutorial.dart';
+import '../state/TutorialBloc.dart';
+import '../state/TutorialState.dart';
 import '../local_widgets/TutorialCard.dart';
+import '../../../widgets/LoadingSpinner.dart';
 
 class TutorialsList extends StatelessWidget {
   final bool isEnglish;
 
   TutorialsList(this.isEnglish);
-
-  final _db = Firestore.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -26,28 +26,27 @@ class TutorialsList extends StatelessWidget {
             ),
           ),
           SizedBox(height: 10),
-          StreamBuilder<QuerySnapshot>(
-              stream: _db
-                  .collection(isEnglish ? 'englishTutorials' : 'hindiTutorials')
-                  .snapshots(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting ||
-                    !snapshot.hasData) {
-                  return Container();
-                }
-                final docs = snapshot.data.documents;
-                List<Tutorial> tutorials = [];
-                docs.forEach(
-                    (doc) => tutorials.add(Tutorial.fromFirestore(doc)));
-                return Container(
-                  height: MediaQuery.of(context).size.height * 0.7,
-                  child: ListView.builder(
-                    itemBuilder: (ctx, index) =>
-                        tutorialCard(context, tutorials[index]),
-                    itemCount: tutorials.length,
-                  ),
-                );
-              }),
+          StreamBuilder<TutorialState>(
+            initialData: TutorialState.onRequest(),
+            stream: Provider.of<TutorialBloc>(context).state,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Container();
+              }
+              final state = snapshot.data;
+              if (state.isLoading) {
+                return Center(child: loadingSpinner());
+              }
+              return Container(
+                height: MediaQuery.of(context).size.height * 0.7,
+                child: ListView.builder(
+                  itemBuilder: (ctx, index) =>
+                      tutorialCard(context, state.tutorials[index]),
+                  itemCount: state.tutorials.length,
+                ),
+              );
+            },
+          ),
         ],
       ),
     );

@@ -18,8 +18,7 @@ class FieldScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<FirebaseUser>(context);
-    bool isEnglish =
-        Provider.of<LocalizationProvider>(context).getCurrentLanguage() == 'en';
+    bool isEnglish = Provider.of<LocalizationProvider>(context).isEnglish;
 
     return Scaffold(
       appBar: customAppBar(

@@ -22,9 +22,7 @@ class LocalizationProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  String getCurrentLanguage() {
-    return _currentLanguage;
-  }
+  String get currentLanguage => _currentLanguage;
 
-  bool get isEnglish => _currentLanguage == 'en';
+  bool get isEnglish => _currentLanguage != 'hn';
 }

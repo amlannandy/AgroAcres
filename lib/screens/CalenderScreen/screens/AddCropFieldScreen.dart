@@ -57,8 +57,7 @@ class _AddCropFieldScreenState extends State<AddCropFieldScreen> {
 
   @override
   Widget build(BuildContext context) {
-    bool isEnglish =
-        Provider.of<LocalizationProvider>(context).getCurrentLanguage() == 'en';
+    bool isEnglish = Provider.of<LocalizationProvider>(context).isEnglish;
 
     return Scaffold(
       appBar: customAppBar(context,

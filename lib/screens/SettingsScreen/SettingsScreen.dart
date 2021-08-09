@@ -2,11 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
+import './state/TutorialBloc.dart';
 import './local_widgets/WhiteAppBar.dart';
 import './local_widgets/TutorialsList.dart';
 import '../../services/LocalizationProvider.dart';
 
 class SettingsScreen extends StatelessWidget {
+  void _switchLanguage(BuildContext context, bool isEnglish) {
+    Provider.of<LocalizationProvider>(context, listen: false)
+        .switchLanguage(!isEnglish);
+    Provider.of<TutorialBloc>(context, listen: false).refresh(!isEnglish);
+  }
+
   @override
   Widget build(BuildContext context) {
     bool isEnglish = Provider.of<LocalizationProvider>(context).isEnglish;
@@ -59,9 +66,7 @@ class SettingsScreen extends StatelessWidget {
           ),
           CupertinoSwitch(
             value: isEnglish,
-            onChanged: (val) =>
-                Provider.of<LocalizationProvider>(context, listen: false)
-                    .switchLanguage(!isEnglish),
+            onChanged: (val) => _switchLanguage(context, isEnglish),
             activeColor: Colors.green[800],
             trackColor: Colors.amber,
           ),
