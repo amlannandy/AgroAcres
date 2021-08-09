@@ -106,7 +106,17 @@ class ProductsBloc {
       _setState(ProductsState.onProductSuccess());
       callback();
     } catch (e) {
-      print(e);
+      _setState(ProductsState.onError('Something went wrong'));
+    }
+  }
+
+  deleteProduct(String id) async {
+    try {
+      _setState(ProductsState.onRequest());
+      await _db.collection('products').document(id).delete();
+      _setState(ProductsState.onProductSuccess());
+      refresh();
+    } catch (e) {
       _setState(ProductsState.onError('Something went wrong'));
     }
   }

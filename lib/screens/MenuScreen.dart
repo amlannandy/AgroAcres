@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../config.dart';
 import '../models/User.dart';
 import '../widgets/UserInfo.dart' as UserInfo;
 import '../widgets/MenuItem.dart';
-import '../screens/WebViewScreen.dart';
 import '../../routing/Application.dart';
 import '../services/UserInfoProvider.dart';
 import '../services/LocalizationProvider.dart';

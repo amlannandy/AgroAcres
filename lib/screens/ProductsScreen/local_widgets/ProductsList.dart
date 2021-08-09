@@ -35,7 +35,7 @@ class ProductsList extends StatelessWidget {
                 return loadingSpinner();
               }
               final products = state.products;
-              if (products.isEmpty) {
+              if (products == null || products.isEmpty) {
                 return Center(
                   child: Text(
                     userOnly
