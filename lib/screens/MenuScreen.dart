@@ -50,15 +50,8 @@ class MenuScreen extends StatelessWidget {
             icon: Icons.calendar_today,
           ),
           menuItem(
-            onPress: () => Navigator.of(context).push(MaterialPageRoute(
-              builder: (ctx) => WebViewScreen(
-                isEnglish ? 'Welcome' : 'स्वागत हे',
-                isEnglish ? CHATBOT_ENGLISH_URL : CHATBOT_HINDI_URL,
-                isEnglish
-                    ? TUTORIAL_URL_CHATBOT_ENGLISH
-                    : TUTORIAL_URL_CHATBOT_HINDI,
-              ),
-            )),
+            onPress: () =>
+                Application.router.navigateTo(context, '/chatbot/$language'),
             title: isEnglish ? 'Chatbot' : 'बॉट चैट करें',
             icon: Icons.chat_bubble_outline,
           ),

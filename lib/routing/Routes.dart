@@ -12,6 +12,7 @@ class Routes {
   static const addProduct = '/add-product';
   static const editProduct = '/edit-product/:productId';
   static const settings = '/settings/:language';
+  static const chatbot = '/chatbot/:language';
 
   static void configureRouter(FluroRouter router) {
     router.define(
@@ -57,6 +58,11 @@ class Routes {
     router.define(
       settings,
       handler: settingsHandler,
+      transitionType: TransitionType.native,
+    );
+    router.define(
+      chatbot,
+      handler: chatbotHandler,
       transitionType: TransitionType.native,
     );
   }
