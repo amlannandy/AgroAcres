@@ -43,7 +43,7 @@ class MenuScreen extends StatelessWidget {
             icon: Icons.storage,
           ),
           menuItem(
-            onPress: () => Navigator.of(context).pushNamed('/field'),
+            onPress: () => Application.router.navigateTo(context, '/my-fields'),
             title: isEnglish ? 'Crop Calender' : 'फसल कैलेंडर',
             icon: Icons.calendar_today,
           ),

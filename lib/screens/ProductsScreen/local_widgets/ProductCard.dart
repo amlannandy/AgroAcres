@@ -30,11 +30,11 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(
-        left: 10,
-        right: 10,
-        top: 10,
+        left: 7.5,
+        right: 7.5,
+        top: 7.5,
       ),
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(7.5),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
@@ -96,11 +96,12 @@ class ProductCard extends StatelessWidget {
   Widget pocketContainer(IconData iconData, String value) {
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(
-            width: 0.4,
-            color: Colors.grey[400],
-          )),
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(
+          width: 0.4,
+          color: Colors.grey[400],
+        ),
+      ),
       child: Row(
         children: <Widget>[
           Container(
@@ -114,7 +115,7 @@ class ProductCard extends StatelessWidget {
             child: Icon(
               iconData,
               color: Colors.white,
-              size: 30,
+              size: 27,
             ),
           ),
           Padding(
@@ -124,7 +125,7 @@ class ProductCard extends StatelessWidget {
               style: TextStyle(
                 color: Colors.grey,
                 fontFamily: 'Lato',
-                fontSize: 20,
+                fontSize: 16,
               ),
             ),
           ),
@@ -154,7 +155,7 @@ class ProductCard extends StatelessWidget {
             child: Icon(
               iconData,
               color: Colors.white,
-              size: 15,
+              size: 14,
             ),
           ),
           Padding(
@@ -164,7 +165,7 @@ class ProductCard extends StatelessWidget {
               style: TextStyle(
                 color: Colors.grey,
                 fontFamily: 'Lato',
-                fontSize: 12,
+                fontSize: 10,
               ),
             ),
           ),

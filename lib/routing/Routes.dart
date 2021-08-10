@@ -13,6 +13,9 @@ class Routes {
   static const editProduct = '/edit-product/:productId';
   static const settings = '/settings/:language';
   static const chatbot = '/chatbot/:language';
+  static const myFields = '/my-fields';
+  static const addCropField = '/add-crop-field';
+  static const myCropField = '/my-fields/:id';
 
   static void configureRouter(FluroRouter router) {
     router.define(
@@ -63,6 +66,21 @@ class Routes {
     router.define(
       chatbot,
       handler: chatbotHandler,
+      transitionType: TransitionType.native,
+    );
+    router.define(
+      myFields,
+      handler: myFieldsHandler,
+      transitionType: TransitionType.native,
+    );
+    router.define(
+      addCropField,
+      handler: addCropFieldsHandler,
+      transitionType: TransitionType.native,
+    );
+    router.define(
+      myCropField,
+      handler: myCropFieldHandler,
       transitionType: TransitionType.native,
     );
   }

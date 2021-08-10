@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 import '../../../models/CropField.dart';
-import '../screens/MyCropFieldScreen.dart';
+import '../../../routing/Application.dart';
 import '../../../services/CropFieldProvider.dart';
 
 Widget fieldCard(BuildContext context, CropField cropField, bool isEnglish) {
   return GestureDetector(
-    onTap: () => Navigator.of(context).push(
-        MaterialPageRoute(builder: (ctx) => MyCropFieldScreen(cropField.id))),
+    onTap: () =>
+        Application.router.navigateTo(context, '/my-fields/${cropField.id}'),
     child: Container(
       margin: const EdgeInsets.only(
         bottom: 10,

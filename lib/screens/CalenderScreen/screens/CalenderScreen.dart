@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,19 +11,19 @@ import '../../../services/UserDatabaseService.dart';
 import '../../../services/LocalizationProvider.dart';
 
 class CalenderScreen extends StatelessWidget {
-  final UserDatabaseService userDatabaseService = UserDatabaseService();
+  final String cropName;
+  final Timestamp timestamp;
+
+  CalenderScreen(this.cropName, this.timestamp);
 
   @override
   Widget build(BuildContext context) {
-    final List cropData = ModalRoute.of(context).settings.arguments;
-    final String cropName = cropData[0];
-    final timestamp = cropData[1];
     bool isEnglish = Provider.of<LocalizationProvider>(context).isEnglish;
 
     return Scaffold(
       appBar: customAppBar(context, isEnglish ? 'Timeline' : 'समय', isEnglish),
       body: StreamBuilder<Calender>(
-          stream: userDatabaseService.streamCalender(cropName),
+          stream: UserDatabaseService().streamCalender(cropName),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting ||
                 !snapshot.hasData) {

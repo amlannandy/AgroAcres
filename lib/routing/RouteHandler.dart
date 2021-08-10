@@ -15,6 +15,9 @@ import '../screens/WeatherScreen/state/WeatherBloc.dart';
 import '../screens/SettingsScreen/SetLanguageScreen.dart';
 import '../screens/ProductsScreen/state/ProductsBloc.dart';
 import '../screens/SettingsScreen/state/TutorialBloc.dart';
+import '../screens/CalenderScreen/screens/FieldScreen.dart';
+import '../screens/CalenderScreen/screens/MyCropFieldScreen.dart';
+import '../screens/CalenderScreen/screens/AddCropFieldScreen.dart';
 
 var initHandler = Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
@@ -97,5 +100,24 @@ var chatbotHandler = Handler(
       isEnglish ? CHATBOT_ENGLISH_URL : CHATBOT_HINDI_URL,
       isEnglish ? TUTORIAL_URL_CHATBOT_ENGLISH : TUTORIAL_URL_CHATBOT_HINDI,
     );
+  },
+);
+
+var myFieldsHandler = Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return FieldScreen();
+  },
+);
+
+var addCropFieldsHandler = Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return AddCropFieldScreen();
+  },
+);
+
+var myCropFieldHandler = Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    String id = params['id'].first;
+    return MyCropFieldScreen(id);
   },
 );

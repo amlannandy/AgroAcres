@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import './CalenderScreen.dart';
 import '../local_widgets/CustomAppBar.dart';
 import '../../../models/CropField.dart';
 import '../local_widgets/FieldDetails.dart';
@@ -48,11 +49,15 @@ class MyCropFieldScreen extends StatelessWidget {
                           cropField.startDate, cropField.harvestTime),
                     ),
                     PrimaryButton(
-                        text: isEnglish ? 'VIEW CALENDER' : 'कैलेंडर देखें',
-                        press: () => Navigator.of(context).pushNamed(
-                            '/calender',
-                            arguments: [cropField.crop, cropField.startDate]),
-                        color: Colors.green[800]),
+                      text: isEnglish ? 'VIEW CALENDER' : 'कैलेंडर देखें',
+                      press: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (ctx) => CalenderScreen(
+                              cropField.crop, cropField.startDate),
+                        ),
+                      ),
+                      color: Colors.green[800],
+                    ),
                     PrimaryButton(
                         text: isEnglish ? 'DELETE CROP FIELD' : 'फसल हटाओ',
                         press: () =>
