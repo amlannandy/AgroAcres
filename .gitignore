@@ -46,3 +46,5 @@ lib/generated_plugin_registrant.dart
 __pycache__
 
 .vscode
+
+/android/app/src/main/AndroidManifest.xml
