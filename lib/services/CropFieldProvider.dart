@@ -81,7 +81,6 @@ class CropFieldProvider {
         backgroundColor: Colors.green,
         textColor: Colors.white);
     Navigator.of(context).pop();
-    Navigator.of(context).pushReplacementNamed('/field');
   }
 
   static deleteCropField(BuildContext context, String fieldId) async {

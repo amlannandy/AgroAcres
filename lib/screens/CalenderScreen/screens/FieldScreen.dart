@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../models/CropField.dart';
 import '../local_widgets/FieldCard.dart';
 import '../local_widgets/EmptyBanner.dart';
+import '../../../routing/Application.dart';
 import '../local_widgets/CustomAppBar.dart';
 import '../../../widgets/LoadingSpinner.dart';
 import '../../../services/UserDatabaseService.dart';
@@ -54,7 +55,8 @@ class FieldScreen extends StatelessWidget {
           Icons.add_circle,
           color: Colors.white.withOpacity(0.8),
         ),
-        onPressed: () => Navigator.of(context).pushNamed('/addcropfield'),
+        onPressed: () =>
+            Application.router.navigateTo(context, '/add-crop-field'),
       ),
     );
   }
