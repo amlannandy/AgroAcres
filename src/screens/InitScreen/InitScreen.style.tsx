@@ -4,9 +4,11 @@ import THEME from "../../constants/theme";
 const styles = StyleSheet.create({
   body: {
     flex: 1,
+  },
+  container: {
+    flex: 1,
     justifyContent: "center",
     alignItems: "flex-start",
-    backgroundColor: THEME.colors.accent,
     paddingHorizontal: 20,
   },
   title: {
